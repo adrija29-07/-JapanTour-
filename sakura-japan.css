@@ -1,0 +1,394 @@
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --s1:#fce4ec;--s2:#f8bbd9;--s3:#f48fb1;--s4:#e91e8c;
+  --s5:#ad1457;--s6:#880e4f;
+  --blush:#fdf0f5;--cream:#fef9fb;
+  --mauve:#c9768e;--rose:#d4547a;
+  --plum:#6d2b45;--wine:#3d1020;
+  --fuji:#9b7dae;--sky:#b8d4e8;
+  --dark:#1c0a14;--mid:#5a2a3a;
+  --gold:#c8964e;--matcha:#5a7c4a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Josefin Sans',sans-serif;background:var(--blush);color:var(--dark);overflow-x:hidden;cursor:none}
+
+/* ── CUSTOM CURSOR ── */
+.cursor{position:fixed;width:6px;height:6px;background:var(--rose);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s}
+.cursor-aura{position:fixed;width:36px;height:36px;border:1px solid rgba(212,84,122,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.25s ease;pointer-events:none}
+
+/* ── PETAL CANVAS ── */
+#petalCanvas{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.petal-svg{position:absolute;top:-40px;opacity:0;animation:petalDrift linear infinite}
+@keyframes petalDrift{
+  0%{opacity:0;transform:translateY(-20px) rotate(0deg)}
+  8%{opacity:.75}
+  90%{opacity:.3}
+  100%{opacity:0;transform:translateY(105vh) rotate(540deg) translateX(80px)}
+}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;width:100%;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:24px 72px;transition:all 0.5s}
+nav.scrolled{background:rgba(253,240,245,0.93);backdrop-filter:blur(24px);padding:16px 72px;border-bottom:1px solid rgba(212,84,122,0.15);box-shadow:0 4px 40px rgba(173,20,87,0.07)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:4px;color:#fff;display:flex;align-items:center;gap:12px}
+nav.scrolled .logo{color:var(--plum)}
+.logo-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.logo-torii svg{width:28px;height:28px}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:10.5px;letter-spacing:3.5px;text-transform:uppercase;font-weight:300;transition:color 0.3s;position:relative}
+nav.scrolled .nav-links a{color:var(--mid)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--rose);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--rose);color:#fff;padding:10px 28px;border-radius:2px;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:400;border:none;cursor:pointer;transition:all 0.3s}
+.nav-cta:hover{background:var(--plum)}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,10,20,0.15) 0%,rgba(28,10,20,0.1) 40%,rgba(28,10,20,0.7) 100%);z-index:1}
+.hero-content{position:relative;z-index:3;padding:0 72px 80px;width:100%}
+.hero-eyebrow{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:18px;font-weight:200}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(80px,11vw,150px);font-weight:300;color:#fff;line-height:0.88;letter-spacing:-2px;margin-bottom:28px}
+.hero-title em{font-style:italic;color:var(--s2)}
+.hero-sub{font-size:12px;letter-spacing:4px;color:rgba(255,255,255,0.6);text-transform:uppercase;font-weight:200;max-width:340px;line-height:2;margin-bottom:40px}
+.hero-btns{display:flex;gap:20px;align-items:center}
+.btn-primary{background:#fff;color:var(--plum);padding:14px 38px;font-size:10px;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.btn-primary:hover{background:var(--s2);color:var(--wine)}
+.btn-ghost{color:#fff;padding:14px 0;font-size:10px;letter-spacing:3px;text-transform:uppercase;background:none;border:none;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.35);transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.btn-ghost:hover{border-color:#fff}
+.hero-stats{position:absolute;right:72px;bottom:80px;z-index:3;display:flex;flex-direction:column;gap:28px;text-align:right}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:#fff;line-height:1}
+.stat-label{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.5);text-transform:uppercase;font-weight:200}
+.scroll-line{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:1px;height:80px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.4));z-index:3}
+
+/* ── MARQUEE STRIP ── */
+.marquee-strip{background:var(--rose);padding:14px 0;overflow:hidden;position:relative;z-index:10}
+.marquee-inner{display:flex;gap:0;animation:marquee 25s linear infinite;width:max-content}
+.marquee-item{font-size:10px;letter-spacing:5px;color:#fff;text-transform:uppercase;font-weight:200;padding:0 40px;border-right:1px solid rgba(255,255,255,0.25);white-space:nowrap}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION COMMONS ── */
+section{position:relative;z-index:5}
+.section-label{font-size:9.5px;letter-spacing:5px;text-transform:uppercase;color:var(--mauve);font-weight:300;margin-bottom:16px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,68px);font-weight:300;line-height:1.05;color:var(--plum)}
+.section-title em{font-style:italic;color:var(--rose)}
+
+/* ── PHILOSOPHY ── */
+.philosophy{padding:120px 72px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.phil-img{position:relative}
+.phil-img-main{width:100%;height:520px;object-fit:cover;filter:saturate(1.1)}
+.phil-img-accent{position:absolute;bottom:-32px;right:-32px;width:200px;height:260px;object-fit:cover;border:6px solid var(--blush)}
+.phil-text{padding-left:24px}
+.phil-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--mauve);line-height:1.7;margin:32px 0;border-left:2px solid var(--s3);padding-left:28px}
+.phil-body{font-size:12.5px;line-height:2.2;color:var(--mid);font-weight:300;letter-spacing:0.5px}
+.jp-text{font-family:'Noto Serif JP',serif;font-size:48px;color:var(--s3);line-height:1;margin-bottom:16px}
+
+/* ── TRAIN JOURNEY SECTION ── */
+.journey{padding:100px 0;overflow:hidden;background:linear-gradient(135deg,var(--cream) 0%,var(--s1) 100%)}
+.journey-header{padding:0 72px;margin-bottom:80px}
+.journey-track{position:relative;padding:60px 0}
+.track-line{position:absolute;top:50%;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--s3) 10%,var(--rose) 50%,var(--s3) 90%,transparent);transform:translateY(-50%)}
+.train-wrapper{position:relative;overflow:hidden;height:200px;display:flex;align-items:center}
+.train-svg-container{position:absolute;animation:trainRide 18s linear infinite}
+@keyframes trainRide{0%{left:-380px}100%{left:110%}}
+/* Track ties */
+.track-ties{position:absolute;top:50%;left:0;right:0;display:flex;gap:28px;transform:translateY(4px)}
+.tie{width:3px;height:18px;background:var(--mauve);opacity:0.25;flex-shrink:0}
+/* Stations */
+.stations{display:flex;justify-content:space-between;padding:0 72px;position:relative;z-index:5}
+.station{text-align:center;position:relative;cursor:pointer}
+.station-dot{width:14px;height:14px;border-radius:50%;background:#fff;border:2.5px solid var(--rose);margin:0 auto 12px;transition:all 0.3s;position:relative;z-index:2}
+.station:hover .station-dot{background:var(--rose);transform:scale(1.3)}
+.station-name{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--mid);font-weight:300}
+.station-jp{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--mauve);margin-top:4px}
+.station-days{font-size:9px;letter-spacing:2px;color:var(--s4);text-transform:uppercase;margin-top:6px;font-weight:200}
+.journey-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:60px}
+.j-card{padding:36px 28px;border-right:1px solid rgba(212,84,122,0.12);position:relative;overflow:hidden;transition:all 0.4s;cursor:pointer}
+.j-card:last-child{border-right:none}
+.j-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(to top,var(--s1),transparent);transition:height 0.4s}
+.j-card:hover::before{height:100%}
+.j-card:hover{transform:translateY(-4px)}
+.j-card-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(212,84,122,0.12);line-height:1;margin-bottom:8px;position:relative;z-index:1}
+.j-card-city{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--plum);margin-bottom:6px;position:relative;z-index:1}
+.j-card-detail{font-size:10px;letter-spacing:2px;color:var(--mauve);text-transform:uppercase;font-weight:200;line-height:1.8;position:relative;z-index:1}
+
+/* ── DESTINATIONS GRID ── */
+.destinations{padding:100px 72px;background:var(--cream)}
+.dest-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;grid-template-rows:320px 320px;gap:16px;margin-top:60px}
+.dest-card{position:relative;overflow:hidden;cursor:pointer;border-radius:2px}
+.dest-card.tall{grid-row:span 2}
+.dest-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s ease}
+.dest-card:hover img{transform:scale(1.06)}
+.dest-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,10,20,0.75) 0%,transparent 55%)}
+.dest-info{position:absolute;bottom:24px;left:24px;right:24px}
+.dest-tag{font-size:8.5px;letter-spacing:4px;text-transform:uppercase;color:var(--s2);font-weight:300;margin-bottom:6px}
+.dest-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:#fff}
+.dest-sub{font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:2px;margin-top:4px;font-weight:200}
+.dest-explore{position:absolute;top:20px;right:20px;width:36px;height:36px;border:1px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;color:#fff}
+.dest-card:hover .dest-explore{opacity:1}
+
+/* ── SEASON CARDS ── */
+.season-cards{padding:100px 72px;background:var(--cream)}
+.season-cards > div{max-width:1200px;margin:0 auto}
+.season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px}
+.season-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(198,60,100,0.08);transition:transform 0.35s ease,box-shadow 0.35s ease;border:1px solid rgba(212,84,122,0.12);cursor:pointer}
+.season-card:hover{transform:translateY(-10px);box-shadow:0 32px 80px rgba(198,60,100,0.14)}
+.season-card img{width:100%;height:240px;object-fit:cover;display:block;transition:transform 0.65s ease}
+.season-card:hover img{transform:scale(1.05)}
+.season-card-body{padding:28px 24px 32px}
+.season-card-season{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--plum);margin-bottom:8px}
+.season-card-months{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--mauve);margin-bottom:14px;display:block}
+.season-card-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--dark);margin-bottom:14px;line-height:1.1}
+.season-card-text{font-size:13px;color:var(--mid);line-height:1.9;margin-bottom:22px}
+.season-card-link{display:inline-block;padding:12px 24px;border-radius:999px;border:1px solid rgba(212,84,122,0.2);color:var(--plum);font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;transition:all 0.3s}
+.season-card-link:hover{background:rgba(212,84,122,0.08);border-color:rgba(212,84,122,0.35)}
+
+/* ── FOOD SECTION ── */
+.food{padding:100px 72px;background:linear-gradient(to bottom,var(--blush),var(--cream))}
+.food-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:80px}
+.food-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.food-card{background:#fff;border-radius:2px;overflow:hidden;transition:all 0.4s;box-shadow:0 2px 20px rgba(173,20,87,0.04)}
+.food-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(173,20,87,0.12)}
+.food-card-img{height:220px;overflow:hidden}
+.food-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
+.food-card:hover .food-card-img img{transform:scale(1.08)}
+.food-card-body{padding:24px 28px}
+.food-tag{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);font-weight:400;margin-bottom:10px}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--plum);margin-bottom:8px}
+.food-desc{font-size:11.5px;color:var(--mid);line-height:1.9;font-weight:300}
+.food-price{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--rose);margin-top:16px}
+
+/* ── HOTELS SECTION ── */
+.hotels{padding:100px 72px;background:var(--wine);position:relative;overflow:hidden}
+.hotels::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(244,143,177,0.05)'/%3E%3C/svg%3E");opacity:0.6}
+.hotels .section-label{color:var(--s3)}
+.hotels .section-title{color:var(--s1)}
+.hotels .section-title em{color:var(--s3)}
+.hotels-header{margin-bottom:60px;display:flex;justify-content:space-between;align-items:flex-end}
+.hotels-subtitle{color:rgba(253,224,236,0.55);font-size:12px;letter-spacing:2px;font-weight:200;max-width:300px;line-height:2}
+.hotels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:1}
+.hotel-card{background:rgba(255,255,255,0.04);border:1px solid rgba(244,143,177,0.1);overflow:hidden;transition:all 0.4s;cursor:pointer}
+.hotel-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(244,143,177,0.25);transform:translateY(-6px)}
+.hotel-img{height:260px;overflow:hidden;position:relative}
+.hotel-img img{width:100%;height:100%;object-fit:cover;filter:saturate(0.85);transition:all 0.6s}
+.hotel-card:hover .hotel-img img{transform:scale(1.05);filter:saturate(1)}
+.hotel-badge{position:absolute;top:16px;right:16px;background:var(--rose);color:#fff;font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:5px 12px;font-weight:300}
+.hotel-body{padding:28px 28px 32px}
+.hotel-stars{color:var(--gold);letter-spacing:2px;font-size:11px;margin-bottom:10px}
+.hotel-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--s1);margin-bottom:6px}
+.hotel-loc{font-size:10px;letter-spacing:3px;color:var(--mauve);text-transform:uppercase;font-weight:200;margin-bottom:14px}
+.hotel-amenities{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.amenity{font-size:9px;letter-spacing:2px;color:rgba(244,143,177,0.5);border:1px solid rgba(244,143,177,0.15);padding:4px 10px;text-transform:uppercase;font-weight:200}
+.hotel-price{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(244,143,177,0.1);padding-top:16px}
+.hotel-rate{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--s2)}
+.hotel-rate span{font-family:'Josefin Sans',sans-serif;font-size:10px;color:rgba(244,143,177,0.4);font-weight:200;letter-spacing:2px}
+.hotel-book{background:transparent;border:1px solid var(--rose);color:var(--s2);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:8px 18px;cursor:pointer;transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.hotel-book:hover{background:var(--rose);color:#fff}
+
+/* ── TRANSPORT SECTION ── */
+.transport{padding:100px 72px;background:var(--blush)}
+.transport-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(212,84,122,0.15);margin-top:60px}
+.transport-item{padding:48px 36px;border-right:1px solid rgba(212,84,122,0.15);transition:all 0.4s;cursor:pointer;position:relative;overflow:hidden}
+.transport-item:last-child{border-right:none}
+.transport-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--rose);transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+.transport-item:hover::after{transform:scaleX(1)}
+.transport-item:hover{background:rgba(212,84,122,0.04)}
+.transport-icon{margin-bottom:24px}
+.transport-icon svg{width:48px;height:48px;stroke:var(--rose);fill:none;stroke-width:1}
+.transport-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--plum);margin-bottom:8px}
+.transport-jp{font-family:'Noto Serif JP',serif;font-size:14px;color:var(--mauve);margin-bottom:16px}
+.transport-desc{font-size:11px;line-height:2;color:var(--mid);font-weight:300;letter-spacing:0.3px}
+.transport-tip{margin-top:20px;font-size:9.5px;letter-spacing:2px;color:var(--rose);text-transform:uppercase;font-weight:300;border-top:1px solid rgba(212,84,122,0.15);padding-top:16px}
+
+/* ── TOURS SECTION ── */
+.tours{padding:100px 72px;background:linear-gradient(180deg,var(--cream),var(--blush))}
+.tours-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px}
+.tour-card{position:relative;overflow:hidden;cursor:pointer;background:#fff;box-shadow:0 4px 30px rgba(173,20,87,0.06)}
+.tour-img{height:280px;overflow:hidden;position:relative}
+.tour-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s}
+.tour-card:hover .tour-img img{transform:scale(1.08)}
+.tour-duration{position:absolute;top:20px;left:20px;background:var(--rose);color:#fff;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:6px 14px;font-weight:300}
+.tour-body{padding:32px 32px 36px}
+.tour-type{font-size:9px;letter-spacing:4px;color:var(--rose);text-transform:uppercase;margin-bottom:10px;font-weight:300}
+.tour-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--plum);margin-bottom:12px;line-height:1.15}
+.tour-desc{font-size:11.5px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:20px}
+.tour-highlights{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.tour-highlight{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--mid);letter-spacing:1px}
+.tour-highlight-dot{width:4px;height:4px;border-radius:50%;background:var(--rose);flex-shrink:0}
+.tour-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(212,84,122,0.1);padding-top:20px}
+.tour-price{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--plum)}
+.tour-price-sub{font-family:'Josefin Sans',sans-serif;font-size:9px;color:var(--mauve);font-weight:200;letter-spacing:2px;display:block;text-transform:uppercase}
+.tour-btn{background:var(--rose);color:#fff;padding:11px 24px;font-size:9px;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.tour-btn:hover{background:var(--plum)}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:100px 72px;background:var(--s1);text-align:center}
+.testimonials .section-title{text-align:center;margin-bottom:12px}
+.testimonials .section-label{text-align:center;margin-bottom:16px}
+.testi-sub{font-size:12px;color:var(--mid);letter-spacing:2px;font-weight:200;text-align:center;margin-bottom:70px}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.testi-card{background:#fff;padding:44px 38px;text-align:left;position:relative}
+.testi-quote-mark{font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--s3);line-height:0.7;margin-bottom:24px;font-style:italic}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.75;color:var(--plum);font-style:italic;margin-bottom:28px}
+.testi-author{display:flex;align-items:center;gap:14px}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--plum)}
+.testi-name{font-size:11px;letter-spacing:2px;color:var(--plum);font-weight:400;text-transform:uppercase}
+.testi-loc{font-size:9.5px;color:var(--mauve);letter-spacing:1.5px;font-weight:200}
+
+/* ── SEASON SECTION ── */
+.seasons{padding:100px 72px;background:var(--cream)}
+.seasons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;border:1px solid rgba(212,84,122,0.12)}
+.season-item{padding:50px 32px;border-right:1px solid rgba(212,84,122,0.12);text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:all 0.4s}
+.season-item:last-child{border-right:none}
+.season-item.active,.season-item:hover{background:var(--rose)}
+.season-item.active .season-name,.season-item:hover .season-name{color:#fff}
+.season-item.active .season-jp,.season-item:hover .season-jp{color:rgba(255,255,255,0.6)}
+.season-item.active .season-months,.season-item:hover .season-months{color:rgba(255,255,255,0.5)}
+.season-item.active .season-highlight,.season-item:hover .season-highlight{color:rgba(255,255,255,0.8)}
+.season-icon-area{margin-bottom:20px;height:50px;display:flex;align-items:center;justify-content:center}
+.season-icon-area svg{width:40px;height:40px;stroke:var(--rose);fill:none;stroke-width:1}
+.season-item.active .season-icon-area svg,.season-item:hover .season-icon-area svg{stroke:#fff}
+.season-name{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--plum);margin-bottom:6px;transition:color 0.3s}
+.season-jp{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--mauve);margin-bottom:16px;transition:color 0.3s}
+.season-months{font-size:9px;letter-spacing:3px;color:var(--mauve);text-transform:uppercase;font-weight:200;margin-bottom:18px;transition:color 0.3s}
+.season-highlight{font-size:11px;color:var(--mid);line-height:1.9;font-weight:300;transition:color 0.3s}
+/* click hint pulse on cards */
+.season-item::before{content:'';position:absolute;inset:0;background:rgba(212,84,122,0);transition:background 0.3s}
+.season-item:hover::before{background:rgba(212,84,122,0.08)}
+.season-click-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--mauve);opacity:0.5;font-weight:200;transition:opacity 0.3s;white-space:nowrap}
+.season-item.active .season-click-hint,.season-item:hover .season-click-hint{color:#fff;opacity:0.6}
+
+/* ── SEASON MODAL OVERLAY ── */
+#seasonModal{
+  position:fixed;inset:0;z-index:8000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+#seasonModal.open{opacity:1;pointer-events:all}
+.season-modal-backdrop{
+  position:absolute;inset:0;
+  background:rgba(10,2,8,0.55);
+  backdrop-filter:blur(18px) saturate(0.6);
+  -webkit-backdrop-filter:blur(18px) saturate(0.6);
+}
+.season-modal-img{
+  position:absolute;inset:0;
+  overflow:hidden;
+}
+.season-modal-img img{
+  width:100%;height:100%;object-fit:cover;
+  transform:scale(1.06);
+  transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  filter:brightness(0.45) saturate(1.15);
+}
+#seasonModal.open .season-modal-img img{transform:scale(1)}
+.season-modal-content{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:60px;
+  max-width:760px;
+}
+.smc-tag{
+  font-size:9px;letter-spacing:6px;text-transform:uppercase;
+  color:var(--s3);font-weight:200;
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s 0.15s cubic-bezier(0.16,1,0.3,1);
+  display:block;margin-bottom:18px;
+}
+.smc-jp{
+  font-family:'Noto Serif JP',serif;font-size:80px;color:rgba(248,187,217,0.18);
+  line-height:1;
+  opacity:0;transform:translateY(30px);
+  transition:all 0.55s 0.22s cubic-bezier(0.16,1,0.3,1);
+  display:block;margin-bottom:-12px;
+}
+.smc-name{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(64px,10vw,120px);
+  font-weight:300;color:#fff;line-height:0.95;letter-spacing:-2px;
+  opacity:0;transform:translateY(36px);
+  transition:all 0.6s 0.28s cubic-bezier(0.16,1,0.3,1);
+  display:block;margin-bottom:28px;
+}
+.smc-months{
+  font-size:10px;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);font-weight:200;
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s 0.38s cubic-bezier(0.16,1,0.3,1);
+  display:block;margin-bottom:32px;
+}
+.smc-divider{
+  width:0;height:1px;background:linear-gradient(to right,transparent,var(--s3),transparent);
+  margin:0 auto 32px;
+  transition:width 0.7s 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.smc-highlight{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);
+  font-style:italic;color:rgba(252,228,236,0.9);line-height:1.65;
+  opacity:0;transform:translateY(24px);
+  transition:all 0.55s 0.52s cubic-bezier(0.16,1,0.3,1);
+  display:block;margin-bottom:48px;
+}
+.smc-extras{
+  display:flex;gap:40px;justify-content:center;
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s 0.62s cubic-bezier(0.16,1,0.3,1);
+}
+.smc-extra-item{text-align:center}
+.smc-extra-label{font-size:8.5px;letter-spacing:3px;color:rgba(244,143,177,0.5);text-transform:uppercase;font-weight:200;margin-bottom:4px}
+.smc-extra-val{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(252,228,236,0.75)}
+.smc-close{
+  position:absolute;top:36px;right:40px;
+  width:44px;height:44px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;
+  background:rgba(0,0,0,0.2);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s;z-index:3;
+  opacity:0;transform:scale(0.7) rotate(-90deg);
+  transition:opacity 0.4s 0.2s,transform 0.4s 0.2s,background 0.3s,border-color 0.3s;
+}
+#seasonModal.open .smc-close{opacity:1;transform:scale(1) rotate(0deg)}
+.smc-close:hover{background:var(--rose);border-color:var(--rose)}
+.smc-close svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.5}
+
+/* states when modal is open — animate all text in */
+#seasonModal.open .smc-tag,
+#seasonModal.open .smc-jp,
+#seasonModal.open .smc-name,
+#seasonModal.open .smc-months,
+#seasonModal.open .smc-highlight,
+#seasonModal.open .smc-extras{opacity:1;transform:none}
+#seasonModal.open .smc-divider{width:200px}
+
+/* ── CTA SECTION ── */
+.cta{padding:160px 72px;background:var(--plum);position:relative;overflow:hidden;text-align:center}
+.cta-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:200px;font-weight:300;color:rgba(255,255,255,0.03);white-space:nowrap;pointer-events:none;letter-spacing:-10px}
+.cta .section-label{color:var(--s3);text-align:center}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,90px);font-weight:300;color:#fff;line-height:1.05;text-align:center;margin:20px 0 16px}
+.cta-title em{font-style:italic;color:var(--s3)}
+.cta-sub{font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.4);text-transform:uppercase;font-weight:200;text-align:center;margin-bottom:50px}
+.cta-btns{display:flex;gap:20px;justify-content:center}
+.cta-btn-white{background:#fff;color:var(--plum);padding:16px 50px;font-size:10px;letter-spacing:4px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.cta-btn-white:hover{background:var(--s2)}
+.cta-btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.25);color:#fff;padding:16px 50px;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;font-family:'Josefin Sans',sans-serif}
+.cta-btn-outline:hover{border-color:#fff}
+
+/* ── FOOTER ── */
+footer{background:var(--wine);padding:80px 72px 40px;border-top:1px solid rgba(244,143,177,0.08)}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+.footer-brand .logo{color:var(--s2);font-size:22px;margin-bottom:20px;display:block}
+.footer-tagline{font-size:11.5px;line-height:2;color:rgba(244,143,177,0.4);font-weight:200;max-width:260px}
+.footer-col h4{font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--s3);font-weight:300;margin-bottom:24px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-links a{font-size:11.5px;color:rgba(244,143,177,0.35);text-decoration:none;transition:color 0.3s;font-weight:200;letter-spacing:1px}
+.footer-links a:hover{color:var(--s2)}
+.footer-bottom{border-top:1px solid rgba(244,143,177,0.07);padding-top:32px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:10px;color:rgba(244,143,177,0.2);letter-spacing:2px;font-weight:200;text-transform:uppercase}
+.footer-socials{display:flex;gap:20px}
+.footer-socials a{width:36px;height:36px;border:1px solid rgba(244,143,177,0.1);display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+.footer-socials a:hover{border-color:var(--rose);background:var(--rose)}
+.footer-socials svg{width:14px;height:14px;stroke:rgba(244,143,177,0.4);fill:none;stroke-width:1.5;transition:stroke 0.3s}
+.footer-socials a:hover svg{stroke:#fff}
+
+/* ── UTILS ── */
+.fade-up{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
+.fade-up.visible{opacity:1;transform:none}

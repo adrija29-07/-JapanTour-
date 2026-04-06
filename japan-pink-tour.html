@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakura Journeys — Japan Tour Experience</title>
+<meta name="description" content="Discover Japan's most iconic cities — Osaka, Kyoto, Tokyo & Mt. Fuji — with a curated 10-day luxury tour experience.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --pink:#e8789a;
+  --pink-deep:#c94d75;
+  --pink-light:#f5b8cb;
+  --pink-pale:#fdf0f4;
+  --pink-soft:#fce8ee;
+  --blush:#fff0f4;
+  --rose:#d63870;
+  --white:#ffffff;
+  --gray:#6b5c62;
+  --gray-light:#9d8a90;
+  --dark:#1a0a10;
+  --gold:#e8b86d;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cursor{position:fixed;width:10px;height:10px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.08s;mix-blend-mode:multiply}
+.cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid var(--pink);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,opacity 0.3s;opacity:0.6}
+.cursor-ring.big{width:64px;height:64px;opacity:0.25}
+
+/* NAVBAR */
+nav{position:fixed;top:0;width:100%;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:24px 64px;transition:all 0.4s}
+nav.scrolled{background:rgba(255,255,255,0.94);backdrop-filter:blur(24px);padding:14px 64px;box-shadow:0 1px 0 rgba(232,120,154,0.12)}
+.logo{font-family:'Playfair Display',serif;font-size:19px;font-weight:300;letter-spacing:4px;color:var(--pink-deep);display:flex;align-items:center;gap:10px}
+.logo-icon{font-size:22px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;position:relative;font-weight:300}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--pink);transition:width 0.3s}
+.nav-links a:hover{color:var(--pink-deep)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:10px 28px;border:1.5px solid var(--pink);color:var(--pink-deep);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;border-radius:40px;transition:all 0.35s;font-weight:400}
+.nav-cta:hover{background:var(--pink);color:white;box-shadow:0 6px 24px rgba(232,120,154,0.4)}
+
+/* HERO */
+.hero{position:relative;height:100vh;overflow:hidden;background-image:linear-gradient(to bottom,rgba(18,8,16,0.18),rgba(18,8,16,0.88)),url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1600');background-size:cover;background-position:center;display:flex;align-items:flex-end;justify-content:center;color:#fff}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 25%,rgba(255,255,255,0.14),transparent 28%),linear-gradient(180deg,rgba(18,8,16,0.18),rgba(18,8,16,0.95));pointer-events:none}
+.hero-bg-circles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-circle{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.35;animation:floatBubble 8s ease-in-out infinite alternate}
+.hero-circle:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,var(--pink-light),transparent);top:-100px;right:-100px;animation-delay:0s}
+.hero-circle:nth-child(2){width:400px;height:400px;background:radial-gradient(circle,#f9d0de,transparent);bottom:-80px;left:-60px;animation-delay:2s}
+.hero-circle:nth-child(3){width:300px;height:300px;background:radial-gradient(circle,var(--pink),transparent);top:30%;left:20%;opacity:0.15;animation-delay:4s}
+@keyframes floatBubble{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-30px) scale(1.06)}}
+
+.hero-inner{position:relative;z-index:2;text-align:left;padding:0 24px;max-width:760px;width:100%;margin-bottom:82px}
+.hero-pretag{display:inline-flex;align-items:center;gap:12px;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:24px;font-weight:300}
+.hero-pretag::before,.hero-pretag::after{content:'';width:32px;height:1px;background:rgba(255,255,255,0.4)}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(64px,9vw,100px);font-weight:300;line-height:0.92;letter-spacing:-2px;color:white;margin-bottom:16px}
+.hero-h1 em{font-style:italic;color:var(--pink-light)}
+.hero-h1 span{display:block}
+.hero-sub{font-size:15px;letter-spacing:1.5px;color:rgba(255,255,255,0.85);font-weight:300;margin-bottom:34px;line-height:1.9;max-width:540px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:42px}
+.btn-primary{padding:16px 42px;background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:white;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.35s;box-shadow:0 8px 32px rgba(232,120,154,0.45);font-weight:400}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 42px rgba(232,120,154,0.6)}
+.btn-ghost{padding:16px 42px;background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.35);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.35s}
+.btn-ghost:hover{background:rgba(255,255,255,0.2);transform:translateY(-3px)}
+
+.hero-season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:16px}
+.season-chip{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:28px;color:rgba(255,255,255,0.9);cursor:pointer;transition:all 0.3s;backdrop-filter:blur(14px);}
+.season-chip:hover{transform:translateY(-4px);background:rgba(255,255,255,0.18)}
+.season-chip.active{background:white;color:var(--dark);border-color:rgba(255,255,255,0.9);box-shadow:0 18px 40px rgba(0,0,0,0.18)}
+.season-thumb{width:60px;height:60px;flex-shrink:0;border-radius:18px;object-fit:cover;box-shadow:0 14px 35px rgba(0,0,0,0.16)}
+.season-chip span{display:flex;flex-direction:column;align-items:flex-start}
+.season-chip strong{font-size:13px;font-weight:600;line-height:1.1}
+.season-chip small{font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:0.8}
+
+/* Floating image cards in hero */
+.hero-float-imgs{position:absolute;inset:0;pointer-events:none;z-index:1}
+.hfi{position:absolute;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(198,60,100,0.18);animation:floatImg 7s ease-in-out infinite alternate}
+.hfi img{width:100%;height:100%;object-fit:cover;display:block}
+.hfi:nth-child(1){width:200px;height:260px;top:12%;left:4%;animation-delay:0s;transform:rotate(-6deg)}
+.hfi:nth-child(2){width:170px;height:220px;bottom:14%;left:8%;animation-delay:2s;transform:rotate(4deg)}
+.hfi:nth-child(3){width:200px;height:260px;top:10%;right:4%;animation-delay:1s;transform:rotate(5deg)}
+.hfi:nth-child(4){width:160px;height:200px;bottom:16%;right:8%;animation-delay:3s;transform:rotate(-5deg)}
+@keyframes floatImg{0%{transform:translateY(0) rotate(var(--r,0deg))}100%{transform:translateY(-18px) rotate(var(--r,0deg))}}
+.hfi:nth-child(1){--r:-6deg}.hfi:nth-child(2){--r:4deg}.hfi:nth-child(3){--r:5deg}.hfi:nth-child(4){--r:-5deg}
+
+.scroll-indicator{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0.5;animation:bounce 2.2s infinite}
+.scroll-indicator span{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.8)}
+.scroll-indicator .scroll-line{width:1px;height:44px;background:linear-gradient(180deg,rgba(255,255,255,0.8),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* SEASONS */
+#seasons{padding:100px 64px;background:linear-gradient(180deg,rgba(255,244,247,0.95),#fff);overflow:hidden}
+.seasons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.season-card{position:relative;overflow:hidden;border-radius:28px;cursor:pointer;transition:transform 0.35s ease,box-shadow 0.35s ease;box-shadow:0 18px 40px rgba(198,60,100,0.08);border:1px solid rgba(232,120,154,0.14);background:white}
+.season-card:hover{transform:translateY(-12px);box-shadow:0 30px 70px rgba(198,60,100,0.15)}
+.season-card.active{border-color:var(--pink);box-shadow:0 34px 78px rgba(232,120,154,0.18)}
+.season-card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform 0.6s ease}
+.season-card:hover img{transform:scale(1.08)}
+.season-card-content{padding:24px}
+.season-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink-deep);margin-bottom:10px;font-weight:500}
+.season-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:300;color:var(--dark);margin-bottom:10px}
+.season-detail{font-size:13px;line-height:1.9;color:var(--gray);font-weight:300}
+.season-display{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:center;margin-top:52px}
+.season-display-image{position:relative;overflow:hidden;border-radius:28px;box-shadow:0 30px 80px rgba(198,60,100,0.12)}
+.season-display-image img{width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;transition:transform 0.7s ease}
+.season-display-image:hover img{transform:scale(1.04)}
+.season-display-copy{padding:36px 32px;background:white;border-radius:28px;box-shadow:0 18px 50px rgba(198,60,100,0.06)}
+.season-display-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:16px;display:inline-flex;align-items:center;gap:8px}
+.season-display-copy h3{font-family:'Playfair Display',serif;font-size:36px;font-weight:300;color:var(--dark);margin-bottom:18px;line-height:1.05}
+.season-display-copy p{font-size:15px;line-height:1.9;color:var(--gray);font-weight:300}
+
+#features{padding:100px 64px;background:var(--pink-pale)}
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px}
+.feature-card{background:white;border-radius:28px;padding:32px;box-shadow:0 16px 50px rgba(198,60,100,0.08);transition:transform 0.35s ease,box-shadow 0.35s ease;cursor:default}
+.feature-card:hover{transform:translateY(-10px);box-shadow:0 28px 70px rgba(198,60,100,0.14)}
+.feature-icon{font-size:32px;margin-bottom:24px;display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,var(--pink-light),var(--pink));color:white}
+.feature-card h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:14px;color:var(--dark)}
+.feature-card p{font-size:13px;line-height:1.95;color:var(--gray);font-weight:300}
+
+/* ===== CITY SLIDER SECTION ===== */
+#cities{padding:100px 0 80px;background:var(--white);overflow:hidden}
+.section-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--pink);margin-bottom:12px;display:flex;align-items:center;gap:14px;font-weight:400}
+.section-label::before{content:'';width:28px;height:1px;background:var(--pink)}
+.section-heading{font-family:'Playfair Display',serif;font-size:clamp(38px,5.5vw,72px);font-weight:300;line-height:1.05;color:var(--dark)}
+.section-heading em{font-style:italic;color:var(--pink-deep)}
+.cities-header{padding:0 64px;margin-bottom:56px;display:flex;justify-content:space-between;align-items:flex-end}
+.cities-arrows{display:flex;gap:10px}
+.arrow-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--pink-light);background:white;color:var(--pink-deep);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;box-shadow:0 4px 16px rgba(232,120,154,0.12)}
+.arrow-btn:hover{background:var(--pink);color:white;border-color:var(--pink);box-shadow:0 8px 28px rgba(232,120,154,0.4);transform:scale(1.08)}
+
+/* The 3D sliding city cards */
+.cities-track-wrap{overflow:hidden;padding:20px 0 40px 64px;perspective:1200px}
+.cities-track{display:flex;gap:28px;transition:transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);transform-style:preserve-3d}
+
+.city-slide-card{
+  flex-shrink:0;width:380px;height:520px;border-radius:28px;position:relative;overflow:hidden;cursor:pointer;
+  transform:rotateY(12deg) scale(0.93);opacity:0.65;
+  transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.7s,box-shadow 0.5s;
+  box-shadow:8px 20px 60px rgba(198,60,100,0.1);
+  transform-style:preserve-3d;
+}
+.city-slide-card.active{transform:rotateY(0deg) scale(1);opacity:1;box-shadow:0 30px 80px rgba(198,60,100,0.28)}
+.city-slide-card.prev{transform:rotateY(-12deg) scale(0.93);opacity:0.65}
+.city-slide-card:hover:not(.active){opacity:0.8;transform:rotateY(0deg) scale(0.96)}
+
+.csc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)}
+.city-slide-card:hover .csc-img,.city-slide-card.active .csc-img{transform:scale(1.06)}
+.csc-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(253,240,244,0.08) 0%,rgba(30,6,16,0.55) 60%,rgba(20,4,12,0.9) 100%)}
+.csc-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 32px}
+.csc-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pink-light);margin-bottom:10px;font-weight:300}
+.csc-name{font-family:'Playfair Display',serif;font-size:52px;font-weight:300;color:white;line-height:0.95;margin-bottom:10px}
+.csc-name em{font-style:italic;color:var(--pink-light)}
+.csc-sub{font-size:12px;letter-spacing:1.5px;color:rgba(255,255,255,0.55);margin-bottom:24px;line-height:1.7;font-weight:300}
+.csc-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);color:white;border-radius:50px;font-size:11px;letter-spacing:3px;text-transform:uppercase;backdrop-filter:blur(8px);transition:all 0.35s;font-weight:300}
+.city-slide-card:hover .csc-btn,.city-slide-card.active .csc-btn{background:var(--pink);border-color:var(--pink);box-shadow:0 6px 20px rgba(232,120,154,0.5)}
+.csc-badge{position:absolute;top:24px;right:24px;background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:50px}
+
+/* City dots nav */
+.cities-dots{display:flex;gap:10px;justify-content:center;margin-top:32px}
+.city-dot{width:8px;height:8px;border-radius:50%;background:var(--pink-light);cursor:pointer;transition:all 0.3s}
+.city-dot.active{width:28px;border-radius:4px;background:var(--pink)}
+
+/* DETAIL PANEL — slides up on city select */
+.city-detail-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s;
+  opacity:0;background:var(--pink-pale);
+}
+.city-detail-panel.open{max-height:600px;opacity:1}
+.cdp-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:0;max-width:1200px;margin:0 auto;padding:60px 64px}
+.cdp-left{padding-right:60px;border-right:1px solid rgba(232,120,154,0.2)}
+.cdp-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:12px}
+.cdp-city{font-family:'Playfair Display',serif;font-size:56px;font-weight:300;line-height:0.95;color:var(--dark);margin-bottom:16px}
+.cdp-city em{font-style:italic;color:var(--pink-deep)}
+.cdp-days{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light);margin-bottom:24px}
+.cdp-divider{width:36px;height:2px;background:var(--pink);margin-bottom:24px;border-radius:2px}
+.cdp-desc{font-size:14px;line-height:1.9;color:var(--gray);font-weight:300;margin-bottom:32px}
+.cdp-book-btn{padding:14px 36px;background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:white;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.35s;box-shadow:0 8px 24px rgba(232,120,154,0.4)}
+.cdp-book-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(232,120,154,0.55)}
+.cdp-right{padding-left:60px;display:flex;flex-direction:column;justify-content:center}
+.cdp-highlights h4{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:20px}
+.hl-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid rgba(232,120,154,0.12)}
+.hl-item:last-child{border-bottom:none}
+.hl-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.hl-text h5{font-size:14px;font-weight:400;color:var(--dark);margin-bottom:4px}
+.hl-text p{font-size:12px;color:var(--gray-light);line-height:1.7;font-weight:300}
+
+/* STATS ROW */
+#stats{background:linear-gradient(135deg,var(--pink-deep),var(--rose));padding:70px 64px}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.15)}
+.stat-card{background:transparent;padding:40px 30px;text-align:center;transition:background 0.3s}
+.stat-card:hover{background:rgba(255,255,255,0.08)}
+.stat-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:300;color:white;line-height:1;margin-bottom:8px;display:block}
+.stat-lbl{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.65);font-weight:300}
+
+/* GALLERY BENTO */
+#gallery{padding:100px 64px;background:var(--white)}
+.bento-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:280px 280px;gap:16px;max-width:1200px;margin:56px auto 0}
+.bento-card{border-radius:20px;overflow:hidden;position:relative;cursor:pointer}
+.bento-card:nth-child(1){grid-column:1/5;grid-row:1/2}
+.bento-card:nth-child(2){grid-column:5/9;grid-row:1/3}
+.bento-card:nth-child(3){grid-column:9/13;grid-row:1/2}
+.bento-card:nth-child(4){grid-column:1/5;grid-row:2/3}
+.bento-card:nth-child(5){grid-column:9/13;grid-row:2/3}
+.bento-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),filter 0.5s;filter:brightness(0.85);display:block}
+.bento-card:hover img{transform:scale(1.08);filter:brightness(1)}
+.bento-info{position:absolute;bottom:0;left:0;right:0;padding:32px 20px 20px;background:linear-gradient(transparent,rgba(30,4,14,0.85));transform:translateY(8px);transition:transform 0.4s;opacity:0}
+.bento-card:hover .bento-info{transform:translateY(0);opacity:1}
+.bento-loc{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink-light);margin-bottom:4px}
+.bento-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:300;color:white}
+
+/* INCLUDED */
+#included{padding:100px 64px;background:var(--pink-pale)}
+.included-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1200px;margin:56px auto 0}
+.inc-card{background:white;border-radius:20px;padding:36px 28px;border:1px solid rgba(232,120,154,0.1);transition:all 0.4s;position:relative;overflow:hidden}
+.inc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--pink-deep));transform:scaleX(0);transform-origin:left;transition:transform 0.4s}
+.inc-card:hover::after{transform:scaleX(1)}
+.inc-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(198,60,100,0.12);border-color:rgba(232,120,154,0.25)}
+.inc-icon{font-size:36px;margin-bottom:20px;display:block}
+.inc-card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:300;color:var(--dark);margin-bottom:12px}
+.inc-card p{font-size:13px;color:var(--gray-light);line-height:1.8;font-weight:300}
+
+/* CONTACT */
+#contact{position:relative;padding:120px 64px;background:var(--white);overflow:hidden}
+.contact-circle{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,var(--pink-soft),transparent 70%);right:-200px;top:-100px;pointer-events:none}
+.contact-inner{max-width:560px;position:relative;z-index:1}
+.contact-h{font-family:'Playfair Display',serif;font-size:clamp(40px,5vw,64px);font-weight:300;line-height:1.1;color:var(--dark);margin-bottom:12px}
+.contact-h em{font-style:italic;color:var(--pink-deep)}
+.contact-sub{font-size:14px;color:var(--gray-light);letter-spacing:0.5px;margin-bottom:48px;font-weight:300;line-height:1.7}
+.form-row{margin-bottom:28px;position:relative}
+.form-row input{width:100%;border:none;border-bottom:1.5px solid rgba(232,120,154,0.25);background:transparent;padding:14px 0;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--dark);outline:none;transition:border-color 0.3s;font-weight:300}
+.form-row input:focus{border-bottom-color:var(--pink)}
+.form-row label{position:absolute;top:14px;left:0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--pink-light);transition:all 0.3s;pointer-events:none}
+.form-row input:focus~label,.form-row input:not(:placeholder-shown)~label{top:-4px;font-size:9px;color:var(--pink)}
+.form-submit{padding:16px 52px;background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:white;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.35s;box-shadow:0 8px 28px rgba(232,120,154,0.4);font-weight:400;margin-top:8px}
+.form-submit:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(232,120,154,0.6)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:36px 64px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:300;letter-spacing:4px;color:var(--pink-light)}
+.footer-copy{font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px}
+.footer-links{display:flex;gap:28px;list-style:none}
+.footer-links a{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.3s}
+.footer-links a:hover{color:var(--pink-light)}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(36px);transition:opacity 0.8s,transform 0.8s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up:nth-child(2){transition-delay:0.12s}
+.fade-up:nth-child(3){transition-delay:0.24s}
+.fade-up:nth-child(4){transition-delay:0.36s}
+.fade-up:nth-child(5){transition-delay:0.48s}
+
+/* CHERRY BLOSSOM PETALS */
+.petals-container{position:fixed;inset:0;pointer-events:none;z-index:9997;overflow:hidden}
+.petal{position:fixed;top:-40px;font-size:18px;opacity:0;animation:petalFall linear infinite;pointer-events:none}
+@keyframes petalFall{
+  0%{transform:translateY(-40px) rotate(0deg);opacity:0.8}
+  10%{opacity:0.8}
+  90%{opacity:0.4}
+  100%{transform:translateY(110vh) rotate(720deg) translateX(80px);opacity:0}
+}
+
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  .hero-inner{text-align:center}
+  .hero-h1{font-size:52px}
+  .hero-sub{max-width:100%;margin-left:auto;margin-right:auto}
+  .hero-season-grid{grid-template-columns:1fr;gap:14px}
+  .hero-season-grid .season-chip{justify-content:flex-start}
+  .hfi{display:none}
+  .cities-header,.cdp-inner,#gallery,#included,#stats,#seasons,#features{padding-left:24px;padding-right:24px}
+  .cities-track-wrap{padding-left:24px}
+  .city-slide-card{width:300px;height:420px}
+  .included-grid{grid-template-columns:1fr 1fr}
+  .bento-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .bento-card{grid-column:auto!important;grid-row:auto!important}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .cdp-inner{grid-template-columns:1fr;gap:40px}
+  .cdp-left{border-right:none;padding-right:0;border-bottom:1px solid rgba(232,120,154,0.2);padding-bottom:32px}
+  .cdp-right{padding-left:0}
+  .seasons-grid{grid-template-columns:1fr}
+  .season-display{grid-template-columns:1fr;gap:24px}
+  .feature-grid{grid-template-columns:1fr 1fr}
+  .feature-card{margin-bottom:18px}
+  footer{flex-direction:column;gap:20px;text-align:center}
+  .footer-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="petals-container" id="petalsContainer"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo"><span class="logo-icon">🌸</span>SAKURA JOURNEYS</div>
+  <ul class="nav-links">
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#included">Included</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-circles">
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+  </div>
+  <div class="hero-float-imgs">
+    <div class="hfi"><img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400" alt="Kyoto"></div>
+    <div class="hfi"><img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400" alt="Osaka"></div>
+    <div class="hfi"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400" alt="Tokyo"></div>
+    <div class="hfi"><img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=400" alt="Fuji"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-pretag">10-Day Curated Tour · Japan</div>
+    <h1 class="hero-h1">
+      <span>Land of the</span>
+      <em>Rising Sun</em>
+    </h1>
+    <p class="hero-sub">Three legendary cities. Ancient temples, neon skylines, and cherry blossoms. An unforgettable journey through the heart of Japan.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('cities').scrollIntoView({behavior:'smooth'})">Explore the Journey</button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+    </div>
+    <div class="hero-season-grid" id="heroSeasonGrid">
+      <button class="season-chip active" data-season="spring">
+        <img class="season-thumb" src="images/sakura_trails_1775434906530.png" alt="Spring Sakura">
+        <span><strong>Spring</strong><small>Sakura Blossom Trails</small></span>
+      </button>
+      <button class="season-chip" data-season="summer">
+        <img class="season-thumb" src="images/lantern_garden_1775434925507.png" alt="Summer Japan">
+        <span><strong>Summer</strong><small>Lantern Festivals & Lush Greens</small></span>
+      </button>
+      <button class="season-chip" data-season="autumn">
+        <img class="season-thumb" src="images/maple_temple_1775434840552.png" alt="Autumn leaves">
+        <span><strong>Autumn</strong><small>Maple Temple Glow</small></span>
+      </button>
+      <button class="season-chip" data-season="winter">
+        <img class="season-thumb" src="images/winter_torii_1775434942007.png" alt="Winter shrine">
+        <span><strong>Winter</strong><small>Snowy shrines & onsen</small></span>
+      </button>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section id="seasons">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label fade-up">Seasons of Japan</div>
+    <div class="section-heading fade-up">Beautiful moments for <em>every season</em></div>
+    <div class="seasons-grid">
+      <div class="season-card active" data-season="spring">
+        <img src="images/sakura_trails_1775434906530.png" alt="Spring Sakura in Kyoto">
+        <div class="season-card-content"><div class="season-label">Spring</div><div class="season-title">Sakura Blossom Trails</div><div class="season-detail">Walk under delicate cherry blossoms and savor the soft pink light of Kyoto's temples.</div></div>
+      </div>
+      <div class="season-card" data-season="summer">
+        <img src="images/lantern_garden_1775434925507.png" alt="Summer gardens in Japan">
+        <div class="season-card-content"><div class="season-label">Summer</div><div class="season-title">Lantern Festivals & Lush Greens</div><div class="season-detail">Experience vibrant matsuri celebrations, lush countryside and long evenings by the river.</div></div>
+      </div>
+      <div class="season-card" data-season="autumn">
+        <img src="images/maple_temple_1775434840552.png" alt="Autumn leaves in Japan">
+        <div class="season-card-content"><div class="season-label">Autumn</div><div class="season-title">Maple Temple</div><div class="season-detail">Discover Kyoto's fiery maple-lined paths and tranquil temple gardens at golden hour.</div></div>
+      </div>
+      <div class="season-card" data-season="winter">
+        <img src="images/winter_torii_1775434942007.png" alt="Winter Japan shrine">
+        <div class="season-card-content"><div class="season-label">Winter</div><div class="season-title">Snow & Onsen</div><div class="season-detail">Relax in hot spring towns, crisp mountain air, and serene snowy shrine views.</div></div>
+      </div>
+    </div>
+    <div class="season-display fade-up">
+      <div class="season-display-image"><img id="seasonMainImage" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1100" alt="Spring Japan"></div>
+      <div class="season-display-copy">
+        <div class="season-display-tag" id="seasonTag">Spring in Japan</div>
+        <h3 id="seasonTitle">Cherry Blossom Dreams</h3>
+        <p id="seasonText">Every season brings a new story. From gentle cherry blossom mornings to snowy shrine evenings, Japan welcomes you with timeless beauty.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITY SLIDER -->
+<section id="cities">
+  <div class="cities-header">
+    <div>
+      <div class="section-label fade-up">Your Itinerary</div>
+      <div class="section-heading fade-up">Four <em>Incredible</em><br>Destinations</div>
+    </div>
+    <div class="cities-arrows">
+      <button class="arrow-btn" id="cityPrev" aria-label="Previous city">&#8592;</button>
+      <button class="arrow-btn" id="cityNext" aria-label="Next city">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="cities-track-wrap">
+    <div class="cities-track" id="citiesTrack">
+
+      <div class="city-slide-card active" data-city="osaka" tabindex="0">
+        <img class="csc-img" src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800" alt="Osaka">
+        <div class="csc-overlay"></div>
+        <div class="csc-badge">Days 1–3</div>
+        <div class="csc-inner">
+          <div class="csc-tag">Japan · Kansai Region</div>
+          <div class="csc-name"><em>Osaka</em></div>
+          <div class="csc-sub">Electric streets, legendary street food &amp; ancient castle walls glowing pink each spring.</div>
+          <div class="csc-btn">Explore <span>&#8594;</span></div>
+        </div>
+      </div>
+
+      <div class="city-slide-card" data-city="kyoto" tabindex="0">
+        <img class="csc-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800" alt="Kyoto">
+        <div class="csc-overlay"></div>
+        <div class="csc-badge">Days 4–6</div>
+        <div class="csc-inner">
+          <div class="csc-tag">Japan · Kansai Region</div>
+          <div class="csc-name"><em>Kyoto</em></div>
+          <div class="csc-sub">A thousand torii gates, geisha districts and bamboo groves draped in morning mist.</div>
+          <div class="csc-btn">Explore <span>&#8594;</span></div>
+        </div>
+      </div>
+
+      <div class="city-slide-card" data-city="tokyo" tabindex="0">
+        <img class="csc-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" alt="Tokyo">
+        <div class="csc-overlay"></div>
+        <div class="csc-badge">Days 7–10</div>
+        <div class="csc-inner">
+          <div class="csc-tag">Japan · Kanto Region</div>
+          <div class="csc-name"><em>Tokyo</em></div>
+          <div class="csc-sub">Neon skylines, world-class sushi and the pulse of 37 million people living in the future.</div>
+          <div class="csc-btn">Explore <span>&#8594;</span></div>
+        </div>
+      </div>
+
+      <div class="city-slide-card" data-city="fuji" tabindex="0">
+        <img class="csc-img" src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800" alt="Mt Fuji">
+        <div class="csc-overlay"></div>
+        <div class="csc-badge">Day Trip</div>
+        <div class="csc-inner">
+          <div class="csc-tag">Hakone · Japan</div>
+          <div class="csc-name">Mt. <em>Fuji</em></div>
+          <div class="csc-sub">Japan's sacred volcano reflected in still mountain waters — a view that stops time.</div>
+          <div class="csc-btn">Explore <span>&#8594;</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="cities-dots" id="citiesDots">
+    <div class="city-dot active"></div>
+    <div class="city-dot"></div>
+    <div class="city-dot"></div>
+    <div class="city-dot"></div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="city-detail-panel" id="cityDetailPanel">
+    <div class="cdp-inner">
+      <div class="cdp-left">
+        <div class="cdp-tag" id="cdpTag"></div>
+        <div class="cdp-city" id="cdpCity"></div>
+        <div class="cdp-days" id="cdpDays"></div>
+        <div class="cdp-divider"></div>
+        <div class="cdp-desc" id="cdpDesc"></div>
+        <button class="cdp-book-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book This Tour 🌸</button>
+      </div>
+      <div class="cdp-right">
+        <div class="cdp-highlights">
+          <h4>Highlights</h4>
+          <div id="cdpHighlights"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-card fade-up"><span class="stat-num">10</span><span class="stat-lbl">Days</span></div>
+    <div class="stat-card fade-up"><span class="stat-num">4</span><span class="stat-lbl">Destinations</span></div>
+    <div class="stat-card fade-up"><span class="stat-num">2</span><span class="stat-lbl">Expert Guides</span></div>
+    <div class="stat-card fade-up"><span class="stat-num">∞</span><span class="stat-lbl">Memories</span></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label fade-up">Visual Journey</div>
+  <div class="section-heading fade-up">Japan in<br><em>Pictures</em></div>
+  <div class="bento-grid">
+    <div class="bento-card fade-up">
+      <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=700" alt="Osaka Castle">
+      <div class="bento-info"><div class="bento-loc">Osaka</div><div class="bento-title">Osaka Castle</div></div>
+    </div>
+    <div class="bento-card fade-up">
+      <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=700" alt="Fushimi Inari">
+      <div class="bento-info"><div class="bento-loc">Kyoto</div><div class="bento-title">Fushimi Inari</div></div>
+    </div>
+    <div class="bento-card fade-up">
+      <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=700" alt="Akihabara">
+      <div class="bento-info"><div class="bento-loc">Tokyo</div><div class="bento-title">Akihabara</div></div>
+    </div>
+    <div class="bento-card fade-up">
+      <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=700" alt="Arashiyama">
+      <div class="bento-info"><div class="bento-loc">Kyoto</div><div class="bento-title">Arashiyama</div></div>
+    </div>
+    <div class="bento-card fade-up">
+      <img src="images/tempura_plate_1775434957171.png" alt="Crispy Tempura">
+      <div class="bento-info"><div class="bento-loc">Local Flavors</div><div class="bento-title">Crispy Tempura</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section id="included">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label fade-up">Everything Covered</div>
+    <div class="section-heading fade-up">What's <em>Included</em></div>
+    <div class="included-grid">
+      <div class="inc-card fade-up"><span class="inc-icon">🗺️</span><h3>Expert Guides</h3><p>Two dedicated English-speaking guides with deep local knowledge of Japan's culture and hidden gems.</p></div>
+      <div class="inc-card fade-up"><span class="inc-icon">✈️</span><h3>Flights</h3><p>Return flights from your city to Osaka, and Tokyo to home — with a reputable carrier.</p></div>
+      <div class="inc-card fade-up"><span class="inc-icon">🚅</span><h3>Shinkansen</h3><p>All inter-city travel including iconic Bullet Train rides connecting Osaka, Kyoto, Tokyo and Hakone.</p></div>
+      <div class="inc-card fade-up"><span class="inc-icon">🏨</span><h3>Hotels</h3><p>Curated 4-star accommodation throughout. Daily breakfast included. Twin or double sharing.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label fade-up">Premium Amenities</div>
+    <div class="section-heading fade-up">What makes this tour <em>stand out</em></div>
+    <div class="feature-grid">
+      <div class="feature-card fade-up"><span class="feature-icon">🛫</span><h3>Seamless Travel</h3><p>Flight planning, transfers and Bullet Train connections are all arranged so you can relax.</p></div>
+      <div class="feature-card fade-up"><span class="feature-icon">🍣</span><h3>Local Flavors</h3><p>Enjoy sushi tastings, kaiseki dinners and the best seasonal cuisine at every stop.</p></div>
+      <div class="feature-card fade-up"><span class="feature-icon">🎎</span><h3>Cultural Access</h3><p>Private temple visits, tea ceremonies, and guided cultural experiences included.</p></div>
+      <div class="feature-card fade-up"><span class="feature-icon">🏨</span><h3>Luxury Stays</h3><p>Handpicked hotels and ryokan with onsen access, central locations and elegant comfort.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-circle"></div>
+  <div class="contact-inner">
+    <div class="section-label">Begin Your Journey</div>
+    <h2 class="contact-h">Ready to <em>Discover</em> Japan?</h2>
+    <p class="contact-sub">Leave a request and our travel specialist will get back to you within 24 hours with a personalised itinerary.</p>
+    <form onsubmit="submitForm(event)">
+      <div class="form-row">
+        <input type="text" id="nameInput" placeholder=" " required>
+        <label for="nameInput">Your Name</label>
+      </div>
+      <div class="form-row">
+        <input type="tel" id="phoneInput" placeholder=" ">
+        <label for="phoneInput">Phone Number</label>
+      </div>
+      <div class="form-row">
+        <input type="email" id="emailInput" placeholder=" ">
+        <label for="emailInput">Email Address</label>
+      </div>
+      <div class="form-row">
+        <input type="text" id="msgInput" placeholder=" ">
+        <label for="msgInput">Your Question or Message</label>
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">Send Request 🌸</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🌸 SAKURA JOURNEYS</div>
+  <ul class="footer-links">
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#included">Included</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 SAKURA JOURNEYS</div>
+</footer>
+
+<script>
+// ── CITY DATA ──────────────────────────────────────────────────────────────
+const cityData={
+  osaka:{
+    tag:'Days 1–3 · Kansai Region, Japan',
+    city:'<em>Osaka</em>',
+    days:'3 Days · Vibrant & Electric',
+    desc:"Osaka is Japan's self-proclaimed kitchen — a city that pulses with energy, street food legends, and unmistakable warmth. From the neon-drenched Dotonbori canal to ancient Osaka Castle bathed in cherry blossom pink, every corner rewards the curious traveller.",
+    highlights:[
+      {icon:'🏯',t:'Osaka Castle',d:'A 16th-century fortress surrounded by moat gardens, stunning in any season.'},
+      {icon:'🍜',t:'Dotonbori Street Food',d:'Takoyaki, okonomiyaki, kushikatsu — all within one dazzling kilometre.'},
+      {icon:'🌆',t:'Shinsekai District',d:'Retro neon streets, fugu restaurants, and old-school arcade culture.'},
+    ]
+  },
+  kyoto:{
+    tag:'Days 4–6 · Kansai Region, Japan',
+    city:'<em>Kyoto</em>',
+    days:'3 Days · Ancient & Serene',
+    desc:"Kyoto is the soul of Japan — a city where centuries-old traditions drift through lantern-lit alleys. Thousands of vermillion torii gates wind up misty mountains, geisha glide through the Gion at dusk, and bamboo whispers secrets in Arashiyama.",
+    highlights:[
+      {icon:'⛩️',t:'Fushimi Inari Shrine',d:'Climb through thousands of torii gates winding up the mountain at sunrise.'},
+      {icon:'🎋',t:'Arashiyama Bamboo Grove',d:'Hauntingly beautiful at any hour — one of Japan\'s most iconic sights.'},
+      {icon:'👘',t:'Gion District',d:'Traditional machiya townhouses and the chance to spot a real geisha at dusk.'},
+    ]
+  },
+  tokyo:{
+    tag:'Days 7–10 · Kanto Region, Japan',
+    city:'<em>Tokyo</em>',
+    days:'4 Days · Future & Culture',
+    desc:"Tokyo is a sensory overload in the best possible way. Robot restaurants beside Michelin-starred sushi counters. Ancient Shinto shrines hidden between glass skyscrapers. Shibuya at rush hour, Senso-ji at sunrise — no city on Earth does contrasts like Tokyo.",
+    highlights:[
+      {icon:'🌆',t:'Shibuya Crossing',d:'The world\'s busiest pedestrian crossing — best seen from above at rush hour.'},
+      {icon:'🗻',t:'Mt. Fuji Day Trip',d:'A scenic Shinkansen to Hakone with jaw-dropping views of Japan\'s sacred peak.'},
+      {icon:'🎮',t:'Akihabara',d:'Anime, manga, electronics and cosplay — a world completely unto itself.'},
+    ]
+  },
+  fuji:{
+    tag:'Day Trip · Hakone, Japan',
+    city:'Mt. <em>Fuji</em>',
+    days:'Day Trip from Tokyo · Unmissable',
+    desc:"No journey to Japan is complete without a glimpse of Mt. Fuji. We've planned a dedicated day trip from Tokyo to Hakone, where the volcano's perfect cone reflects in the still waters of Lake Ashi. Rope cars, open-air baths, and sacred mountain air await.",
+    highlights:[
+      {icon:'🚠',t:'Hakone Ropeway',d:'Float above volcanic steam vents with Fuji\'s cone filling the sky behind you.'},
+      {icon:'⛵',t:'Lake Ashi',d:'A serene crater lake where Fuji is perfectly mirrored on calm mornings.'},
+      {icon:'♨️',t:'Onsen Soak',d:'Soak in natural hot spring baths with a view of the sacred mountain at sunset.'},
+    ]
+  }
+};
+
+// ── CURSOR ─────────────────────────────────────────────────────────────────
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*0.13;ry+=(my-ry)*0.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('button,a,.city-slide-card,.bento-card,.inc-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+});
+
+// ── NAVBAR ──────────────────────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ── CITY SLIDER ─────────────────────────────────────────────────────────────
+const cards=document.querySelectorAll('.city-slide-card');
+const dots=document.querySelectorAll('.city-dot');
+const panel=document.getElementById('cityDetailPanel');
+let activeIdx=0;
+
+function updateCityClasses(){
+  cards.forEach((c,i)=>{
+    c.classList.remove('active','prev');
+    if(i===activeIdx)c.classList.add('active');
+    else if(i===activeIdx-1)c.classList.add('prev');
+  });
+  dots.forEach((d,i)=>d.classList.toggle('active',i===activeIdx));
+  // Scroll track so active card is roughly centered
+  const track=document.getElementById('citiesTrack');
+  const cardW=cards[0].offsetWidth+28;
+  const offset=Math.max(0,activeIdx*cardW-40);
+  track.style.transform=`translateX(-${offset}px)`;
+}
+
+function showPanel(city){
+  const d=cityData[city];
+  if(!d)return;
+  document.getElementById('cdpTag').textContent=d.tag;
+  document.getElementById('cdpCity').innerHTML=d.city;
+  document.getElementById('cdpDays').textContent=d.days;
+  document.getElementById('cdpDesc').textContent=d.desc;
+  document.getElementById('cdpHighlights').innerHTML=
+    d.highlights.map(h=>`<div class="hl-item"><span class="hl-icon">${h.icon}</span><div class="hl-text"><h5>${h.t}</h5><p>${h.d}</p></div></div>`).join('');
+  panel.classList.add('open');
+}
+
+const seasonData={
+  spring:{tag:'Spring Blossom',title:'Sakura Blossom Trails',text:'Kyoto’s temple gardens become a fairy tale of soft pink petals and gentle mornings. This season is perfect for serene strolls beneath endless blooms.',image:'images/sakura_trails_1775434906530.png',heroBg:'images/sakura_trails_1775434906530.png'},
+  summer:{tag:'Summer Festivals',title:'Lantern Festivals & Lush Greens',text:'Festivals, lantern-lit evenings, and lush green mountains create a warm, lively Japan filled with local charm and long summer nights.',image:'images/lantern_garden_1775434925507.png',heroBg:'images/lantern_garden_1775434925507.png'},
+  autumn:{tag:'Autumn Glow',title:'Maple Temple',text:'Maple leaves glow crimson and gold around ancient shrines, offering one of Japan’s most cinematic and peaceful seasonal experiences.',image:'images/maple_temple_1775434840552.png',heroBg:'images/maple_temple_1775434840552.png'},
+  winter:{tag:'Winter Quiet',title:'Snowy Shrine Nights',text:'Crisp air, snowy temples, and steaming onsen make winter feel like a private escape through picturesque Japanese landscapes.',image:'images/winter_torii_1775434942007.png',heroBg:'images/winter_torii_1775434942007.png'},
+};
+
+const seasonCards=document.querySelectorAll('.season-card');
+const seasonChips=document.querySelectorAll('.season-chip');
+const seasonMainImg=document.getElementById('seasonMainImage');
+const seasonTag=document.getElementById('seasonTag');
+const seasonTitle=document.getElementById('seasonTitle');
+const seasonText=document.getElementById('seasonText');
+const hero=document.querySelector('.hero');
+
+function updateSeason(season){
+  const data=seasonData[season];
+  if(!data) return;
+  seasonCards.forEach(card=>card.classList.toggle('active',card.dataset.season===season));
+  seasonChips.forEach(chip=>chip.classList.toggle('active',chip.dataset.season===season));
+  seasonMainImg.src=data.image;
+  seasonMainImg.alt=data.title;
+  seasonTag.textContent=data.tag;
+  seasonTitle.textContent=data.title;
+  seasonText.textContent=data.text;
+  hero.style.backgroundImage=`linear-gradient(to bottom,rgba(18,8,16,0.18),rgba(18,8,16,0.95)),url('${data.heroBg}')`;
+}
+
+seasonCards.forEach(card=>card.addEventListener('click',()=>updateSeason(card.dataset.season)));
+seasonChips.forEach(chip=>chip.addEventListener('click',()=>updateSeason(chip.dataset.season)));
+
+updateSeason('spring');
+
+function goTo(idx){
+  activeIdx=((idx%cards.length)+cards.length)%cards.length;
+  updateCityClasses();
+  showPanel(cards[activeIdx].dataset.city);
+}
+
+document.getElementById('cityPrev').addEventListener('click',()=>goTo(activeIdx-1));
+document.getElementById('cityNext').addEventListener('click',()=>goTo(activeIdx+1));
+dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+cards.forEach((c,i)=>c.addEventListener('click',()=>goTo(i)));
+// Keyboard nav
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight')goTo(activeIdx+1);
+  if(e.key==='ArrowLeft')goTo(activeIdx-1);
+});
+// Auto-slide
+let autoSlide=setInterval(()=>goTo(activeIdx+1),4500);
+document.getElementById('citiesTrack').addEventListener('mouseenter',()=>clearInterval(autoSlide));
+document.getElementById('citiesTrack').addEventListener('mouseleave',()=>{autoSlide=setInterval(()=>goTo(activeIdx+1),4500)});
+
+// Init panel
+goTo(0);
+
+// ── CHERRY BLOSSOM PETALS ───────────────────────────────────────────────────
+const petalEmojis=['🌸','🌺','🌷'];
+const container=document.getElementById('petalsContainer');
+function spawnPetal(){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.textContent=petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+  p.style.left=Math.random()*100+'vw';
+  const dur=5+Math.random()*8;
+  p.style.animationDuration=dur+'s';
+  p.style.animationDelay=(Math.random()*4)+'s';
+  p.style.fontSize=(12+Math.random()*14)+'px';
+  p.style.opacity='0';
+  container.appendChild(p);
+  setTimeout(()=>p.remove(),(dur+4)*1000);
+}
+for(let i=0;i<12;i++)setTimeout(spawnPetal,i*600);
+setInterval(spawnPetal,2200);
+
+// ── SCROLL ANIMATIONS ───────────────────────────────────────────────────────
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// ── FORM ─────────────────────────────────────────────────────────────────────
+function submitForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Request Sent 🌸';
+  btn.style.background='linear-gradient(135deg,#2ecc71,#27ae60)';
+  btn.style.boxShadow='0 8px 28px rgba(46,204,113,0.4)';
+  setTimeout(()=>{
+    btn.textContent='Send Request 🌸';
+    btn.style.background='';btn.style.boxShadow='';
+  },3500);
+}
+</script>
+</body>
+</html>

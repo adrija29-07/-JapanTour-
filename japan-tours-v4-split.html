@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakura Japan — Where Every Journey Blooms</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@100;200;300;400;600&family=Noto+Serif+JP:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="sakura-japan.css">
+  <style>
+    /* ── BOOKING MODAL ── */
+    .booking-modal { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+    .booking-modal.open { opacity: 1; pointer-events: all; }
+    .booking-modal-overlay { position: absolute; inset: 0; background: rgba(28,10,20,0.6); backdrop-filter: blur(8px); }
+    .booking-modal-content { position: relative; background: var(--blush); padding: 50px; border-radius: 4px; border: 1px solid rgba(212,84,122,0.15); box-shadow: 0 30px 80px rgba(28,10,20,0.3); width: 100%; max-width: 480px; transform: translateY(20px); transition: transform 0.4s; }
+    .booking-modal.open .booking-modal-content { transform: translateY(0); }
+    .booking-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 16px; color: var(--mauve); cursor: pointer; transition: color 0.3s; }
+    .booking-close:hover { color: var(--rose); }
+    .booking-header { margin-bottom: 30px; text-align: center; }
+    .booking-header .section-title { font-size: 42px; margin-top: 5px; }
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-group label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; font-weight: 300; }
+    .form-group input { width: 100%; border: 1px solid rgba(212,84,122,0.2); background: #fff; padding: 12px 16px; font-family: 'Josefin Sans', sans-serif; font-size: 14px; color: var(--plum); transition: border-color 0.3s; }
+    .form-group input:focus { outline: none; border-color: var(--rose); }
+    .booking-submit { width: 100%; background: var(--rose); color: #fff; padding: 16px; border: none; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; margin-top: 10px; transition: background 0.3s; font-family: 'Josefin Sans', sans-serif; }
+    .booking-submit:hover { background: var(--plum); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-aura" id="cursorAura"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="logo">
+      <svg class="logo-torii" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="6" width="24" height="2.5" rx="1" fill="currentColor" />
+        <rect x="4" y="10" width="20" height="2" rx="1" fill="currentColor" opacity="0.6" />
+        <rect x="6" y="12" width="3" height="14" rx="1" fill="currentColor" />
+        <rect x="19" y="12" width="3" height="14" rx="1" fill="currentColor" />
+      </svg>
+      SAKURA JAPAN
+    </div>
+    <ul class="nav-links">
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#destinations">Discover</a></li>
+      <li><a href="#food">Cuisine</a></li>
+      <li><a href="#hotels">Stay</a></li>
+      <li><a href="#transport">Travel</a></li>
+      <li><a href="#tours">Tours</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openBookingModal('General Inquiry')">Plan My Trip</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1800&q=80" alt="Japan"
+        onerror="this.style.background='linear-gradient(135deg,#3d1020,#6d2b45,#c9768e)'">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Sakura Japan</div>
+      <h1 class="hero-title">The Art of<br><em>Slow Discovery</em></h1>
+      <p class="hero-sub">A curated journey through the soul of Japan. Beyond the map, where rituals breathe and silence
+        speaks.</p>
+      <div class="hero-btns">
+        <button class="btn-primary"
+          onclick="openBookingModal('Start Your Journey')">Start Your Journey</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner" id="marqueeInner">
+      <span class="marquee-item">Cherry Blossom Season</span>
+      <span class="marquee-item">Ryokan Stays</span>
+      <span class="marquee-item">Shinkansen Travel</span>
+      <span class="marquee-item">Temple Walks</span>
+      <span class="marquee-item">Kaiseki Dining</span>
+      <span class="marquee-item">Onsen Experiences</span>
+      <span class="marquee-item">Mount Fuji Views</span>
+      <span class="marquee-item">Geisha Districts</span>
+      <span class="marquee-item">Neon Nights Tokyo</span>
+      <span class="marquee-item">Cherry Blossom Season</span>
+      <span class="marquee-item">Ryokan Stays</span>
+      <span class="marquee-item">Shinkansen Travel</span>
+      <span class="marquee-item">Temple Walks</span>
+      <span class="marquee-item">Kaiseki Dining</span>
+      <span class="marquee-item">Onsen Experiences</span>
+      <span class="marquee-item">Mount Fuji Views</span>
+      <span class="marquee-item">Geisha Districts</span>
+      <span class="marquee-item">Neon Nights Tokyo</span>
+    </div>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy fade-up">
+    <div class="phil-img">
+      <img class="phil-img-main"
+        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80" alt="Japan"
+        onerror="this.style.background='linear-gradient(135deg,#fce4ec,#f48fb1)'">
+      <img class="phil-img-accent"
+        src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80"
+        alt="Japan detail" onerror="this.style.background='linear-gradient(135deg,#f48fb1,#ad1457)'">
+    </div>
+    <div class="phil-text">
+      <div class="jp-text">旅</div>
+      <div class="section-label">Our Philosophy</div>
+      <h2 class="section-title">The Art of<br><em>Slow Discovery</em></h2>
+      <blockquote class="phil-quote">"Beyond the crowds lies a Japan of quiet rituals, artisan paths, and landscapes
+        that hold their breath just for you."</blockquote>
+      <p class="phil-body">We believe travel is not a checklist. Japan rewards those who pause — who watch the steam
+        rise from a bowl of ramen at dawn, who sit long enough in a temple garden to hear the silence. Our journeys are
+        crafted for the curious soul, not the rushed tourist.</p>
+    </div>
+  </section>
+
+  <!-- JOURNEY / TRAIN SECTION -->
+  <section class="journey" id="journey">
+    <div class="journey-header fade-up">
+      <div class="section-label">The Grand Route</div>
+      <h2 class="section-title">Your Journey<br><em>Across Japan</em></h2>
+    </div>
+
+    <!-- Train Animation -->
+    <div
+      style="position:relative;overflow:hidden;height:120px;margin:0 0 0 0;background:linear-gradient(to bottom,transparent,rgba(244,143,177,0.06),transparent)">
+      <!-- Track -->
+      <div
+        style="position:absolute;top:50%;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,rgba(173,20,87,0.2) 8%,rgba(173,20,87,0.35) 50%,rgba(173,20,87,0.2) 92%,transparent);transform:translateY(6px)">
+      </div>
+      <!-- Track ties (decorative lines) -->
+      <div id="trackTies"
+        style="position:absolute;top:50%;left:0;right:0;display:flex;gap:22px;transform:translateY(-2px);overflow:hidden">
+      </div>
+      <!-- Train SVG -->
+      <div id="trainContainer"
+        style="position:absolute;top:50%;transform:translateY(-50%);animation:trainRide 16s linear infinite">
+        <svg viewBox="0 0 340 60" width="340" height="60" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <!-- Shinkansen body -->
+          <rect x="20" y="18" width="300" height="28" rx="4" fill="white" stroke="#d4547a" stroke-width="1" />
+          <!-- Nose -->
+          <path d="M20 18 Q2 32 20 46 Z" fill="white" stroke="#d4547a" stroke-width="1" />
+          <!-- Blue stripe -->
+          <rect x="20" y="26" width="300" height="5" fill="#2979c8" opacity="0.6" />
+          <!-- Red stripe -->
+          <rect x="20" y="22" width="300" height="2" fill="#d4547a" opacity="0.5" />
+          <!-- Windows -->
+          <rect x="36" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="62" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="88" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="114" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="140" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="166" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="192" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="218" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="244" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="270" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <rect x="296" y="21" width="16" height="10" rx="2" fill="#cce4f7" stroke="#b8d4e8" stroke-width="0.5" />
+          <!-- Wheels -->
+          <circle cx="70" cy="46" r="5" fill="#9b7dae" stroke="#6d2b45" stroke-width="1" />
+          <circle cx="120" cy="46" r="5" fill="#9b7dae" stroke="#6d2b45" stroke-width="1" />
+          <circle cx="200" cy="46" r="5" fill="#9b7dae" stroke="#6d2b45" stroke-width="1" />
+          <circle cx="260" cy="46" r="5" fill="#9b7dae" stroke="#6d2b45" stroke-width="1" />
+          <!-- Speed lines -->
+          <line x1="0" y1="28" x2="-30" y2="28" stroke="rgba(212,84,122,0.3)" stroke-width="1" />
+          <line x1="0" y1="32" x2="-50" y2="32" stroke="rgba(212,84,122,0.2)" stroke-width="1" />
+          <line x1="0" y1="36" x2="-20" y2="36" stroke="rgba(212,84,122,0.15)" stroke-width="1" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Stations -->
+    <div class="stations fade-up">
+      <div class="station">
+        <div class="station-dot" style="background:var(--rose)"></div>
+        <div class="station-name">Tokyo</div>
+        <div class="station-jp">東京</div>
+        <div class="station-days">Day 1–3</div>
+      </div>
+      <div class="station">
+        <div class="station-dot"></div>
+        <div class="station-name">Hakone</div>
+        <div class="station-jp">箱根</div>
+        <div class="station-days">Day 4–5</div>
+      </div>
+      <div class="station">
+        <div class="station-dot"></div>
+        <div class="station-name">Kyoto</div>
+        <div class="station-jp">京都</div>
+        <div class="station-days">Day 6–9</div>
+      </div>
+      <div class="station">
+        <div class="station-dot"></div>
+        <div class="station-name">Nara</div>
+        <div class="station-jp">奈良</div>
+        <div class="station-days">Day 10</div>
+      </div>
+      <div class="station">
+        <div class="station-dot"></div>
+        <div class="station-name">Osaka</div>
+        <div class="station-jp">大阪</div>
+        <div class="station-days">Day 11–14</div>
+      </div>
+    </div>
+
+    <!-- Journey Cards -->
+    <div class="journey-cards fade-up">
+      <div class="j-card">
+        <div class="j-card-num">01</div>
+        <div class="j-card-city">Tokyo</div>
+        <div class="j-card-detail">Shibuya Crossing<br>Tsukiji Market<br>Shinjuku Nights<br>Senso-ji Temple</div>
+      </div>
+      <div class="j-card">
+        <div class="j-card-num">02</div>
+        <div class="j-card-city">Hakone</div>
+        <div class="j-card-detail">Mt Fuji Views<br>Onsen Ryokan<br>Lake Ashi Cruise<br>Open Air Museum</div>
+      </div>
+      <div class="j-card">
+        <div class="j-card-num">03</div>
+        <div class="j-card-city">Kyoto</div>
+        <div class="j-card-detail">Fushimi Inari<br>Arashiyama Grove<br>Gion District<br>Kinkaku-ji</div>
+      </div>
+      <div class="j-card">
+        <div class="j-card-num">04</div>
+        <div class="j-card-city">Nara</div>
+        <div class="j-card-detail">Sacred Deer Park<br>Todai-ji Temple<br>Kasuga Shrine<br>Naramachi Walk</div>
+      </div>
+      <div class="j-card">
+        <div class="j-card-num">05</div>
+        <div class="j-card-city">Osaka</div>
+        <div class="j-card-detail">Dotonbori Eats<br>Osaka Castle<br>Kuromon Market<br>Umeda Sky Bldg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="destinations" id="destinations">
+    <div class="fade-up">
+      <div class="section-label">Four Incredible Destinations</div>
+      <h2 class="section-title">Choose Your<br><em>Destination</em></h2>
+    </div>
+    <div class="dest-grid fade-up">
+      <div class="dest-card tall">
+        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80"
+          alt="Kyoto" onerror="this.style.background='linear-gradient(135deg,#3d1020,#c9768e)'">
+        <div class="dest-overlay"></div>
+        <div class="dest-info">
+          <div class="dest-tag">Central Honshu</div>
+          <div class="dest-name">The Eternal City: Kyoto</div>
+          <div class="dest-sub">1,000 years of imperial grace</div>
+        </div>
+        <div class="dest-explore">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.2" />
+          </svg>
+        </div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Tokyo"
+          onerror="this.style.background='linear-gradient(135deg,#1a0a12,#6d2b45)'">
+        <div class="dest-overlay"></div>
+        <div class="dest-info">
+          <div class="dest-tag">Kanto Region</div>
+          <div class="dest-name">Neon Tokyo</div>
+          <div class="dest-sub">Future meets tradition</div>
+        </div>
+        <div class="dest-explore"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.2" />
+          </svg></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=800&q=80"
+          alt="Hakone" onerror="this.style.background='linear-gradient(135deg,#c9768e,#fce4ec)'">
+        <div class="dest-overlay"></div>
+        <div class="dest-info">
+          <div class="dest-tag">Wild North</div>
+          <div class="dest-name">Mount Fuji</div>
+          <div class="dest-sub">Japan's sacred summit</div>
+        </div>
+        <div class="dest-explore"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.2" />
+          </svg></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=800&q=80"
+          alt="Onsen" onerror="this.style.background='linear-gradient(135deg,#8b6f9e,#3d1020)'">
+        <div class="dest-overlay"></div>
+        <div class="dest-info">
+          <div class="dest-tag">Ryokan Living</div>
+          <div class="dest-name">Onsen Hakone</div>
+          <div class="dest-sub">Where healing waters flow</div>
+        </div>
+        <div class="dest-explore"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.2" />
+          </svg></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEASONS -->
+  <section class="season-cards fade-up">
+    <div>
+      <div class="section-label">Seasonal Journeys</div>
+      <h2 class="section-title">Japan in<br><em>Every Season</em></h2>
+    </div>
+    <div class="season-grid fade-up">
+      <article class="season-card">
+        <img src="images/sakura_trails_1775434906530.png" alt="Spring Sakura">
+        <div class="season-card-body">
+          <div class="season-card-season">Spring</div>
+          <div class="season-card-months">March — May</div>
+          <div class="season-card-title">Sakura Blossom Trails</div>
+          <p class="season-card-text">Cherry blossoms frame temple gardens, river paths, and historic streets in a soft
+            pink glow.</p>
+          <button class="season-card-link" onclick="openSeasonModal('spring')">Click to Explore</button>
+        </div>
+      </article>
+      <article class="season-card">
+        <img src="images/lantern_garden_1775434925507.png" alt="Summer Festival">
+        <div class="season-card-body">
+          <div class="season-card-season">Summer</div>
+          <div class="season-card-months">June — August</div>
+          <div class="season-card-title">Lantern Festivals & Lush Greens</div>
+          <p class="season-card-text">Long evenings, lantern-lit streets, and mountain retreats full of summer ritual
+            and colour.</p>
+          <button class="season-card-link" onclick="openSeasonModal('summer')">Click to Explore</button>
+        </div>
+      </article>
+      <article class="season-card">
+        <img src="images/maple_temple_1775434840552.png" alt="Autumn Leaves">
+        <div class="season-card-body">
+          <div class="season-card-season">Autumn</div>
+          <div class="season-card-months">September — November</div>
+          <div class="season-card-title">Maple Cloaked Temples</div>
+          <p class="season-card-text">Crimson and amber maples surround ancient shrines, creating one of Japan’s most
+            unforgettable seasons.</p>
+          <button class="season-card-link" onclick="openSeasonModal('autumn')">Click to Explore</button>
+        </div>
+      </article>
+      <article class="season-card">
+        <img src="images/winter_torii_1775434942007.png" alt="Winter Shrine">
+        <div class="season-card-body">
+          <div class="season-card-season">Winter</div>
+          <div class="season-card-months">December — February</div>
+          <div class="season-card-title">Snowy Shrine Escapes</div>
+          <p class="season-card-text">Crisp air, steaming onsen, and quiet snowy temple gardens for peaceful, intimate
+            winter travel.</p>
+          <button class="season-card-link" onclick="openSeasonModal('winter')">Click to Explore</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOOD SECTION -->
+  <section class="food" id="food">
+    <div class="food-intro fade-up">
+      <div>
+        <div class="section-label">Japanese Cuisine</div>
+        <h2 class="section-title">A Nation<br><em>Told in Flavour</em></h2>
+      </div>
+      <div>
+        <p style="font-size:12.5px;line-height:2.2;color:var(--mid);font-weight:300">Japan's cuisine is an art form as
+          precise and meditative as its temples. Each prefecture offers its own dialect of taste — from the delicate
+          kaiseki of Kyoto to the bold street food of Osaka's Dotonbori. We guide you to the tables where memory is
+          made.</p>
+        <div style="margin-top:24px;display:flex;gap:32px">
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--rose)">24</div>
+            <div style="font-size:9px;letter-spacing:3px;color:var(--mauve);text-transform:uppercase;font-weight:200">
+              Restaurant Partners</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--rose)">8</div>
+            <div style="font-size:9px;letter-spacing:3px;color:var(--mauve);text-transform:uppercase;font-weight:200">
+              Michelin Stars</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--rose)">5</div>
+            <div style="font-size:9px;letter-spacing:3px;color:var(--mauve);text-transform:uppercase;font-weight:200">
+              Cooking Classes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="food-grid fade-up">
+      <div class="food-card">
+        <div class="food-card-img"><img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&q=80"
+            alt="Ramen" onerror="this.parentElement.style.background='linear-gradient(135deg,#f48fb1,#fce4ec)'"></div>
+        <div class="food-card-body">
+          <div class="food-tag">Comfort Food</div>
+          <div class="food-name">Tonkotsu Ramen</div>
+          <div class="food-desc">Rich pork bone broth simmered for 18 hours. The definitive bowl of Japan's most beloved
+            street comfort.</div>
+          <div class="food-price">From ¥1,200</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-img"><img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=600&q=80"
+            alt="Sushi" onerror="this.parentElement.style.background='linear-gradient(135deg,#cce4f7,#8b6f9e)'"></div>
+        <div class="food-card-body">
+          <div class="food-tag">Artisan Craft</div>
+          <div class="food-name">Omakase Sushi</div>
+          <div class="food-desc">Leave the menu to the itamae. A procession of finest cuts shaped with decades of
+            practiced precision.</div>
+          <div class="food-price">From ¥18,000</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-img"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80"
+            alt="Kaiseki" onerror="this.parentElement.style.background='linear-gradient(135deg,#f48fb1,#6d2b45)'"></div>
+        <div class="food-card-body">
+          <div class="food-tag">Fine Dining</div>
+          <div class="food-name">Kyoto Kaiseki</div>
+          <div class="food-desc">Multi-course haute cuisine born in Kyoto's tea ceremony culture. A symphony of seasonal
+            ingredients.</div>
+          <div class="food-price">From ¥25,000</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-img"><img src="images/wagashi_matcha_1775435213445.png" alt="Wagashi"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#fce4ec,#c9768e)'"></div>
+        <div class="food-card-body">
+          <div class="food-tag">Sweet Arts</div>
+          <div class="food-name">Wagashi & Matcha</div>
+          <div class="food-desc">Traditional confections crafted to reflect the seasons, served with ceremonial grade
+            powdered green tea.</div>
+          <div class="food-price">From ¥2,500</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-img"><img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80"
+            alt="Yakitori" onerror="this.parentElement.style.background='linear-gradient(135deg,#c8964e,#6d2b45)'">
+        </div>
+        <div class="food-card-body">
+          <div class="food-tag">Street Food</div>
+          <div class="food-name">Yakitori & Sake</div>
+          <div class="food-desc">Skewered grilled chicken over binchotan charcoal, best enjoyed in a smoky lantern-lit
+            alleyway izakaya.</div>
+          <div class="food-price">From ¥3,500</div>
+        </div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-img"><img src="images/tempura_plate_1775434957171.png" alt="Tempura"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#f9c8dc,#5a7c4a)'"></div>
+        <div class="food-card-body">
+          <div class="food-tag">Classic</div>
+          <div class="food-name">Tempura Course</div>
+          <div class="food-desc">Light, impossibly crisp batter encasing the season's finest vegetables and seafood,
+            fried to golden perfection.</div>
+          <div class="food-price">From ¥8,000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOTELS SECTION -->
+  <section class="hotels" id="hotels">
+    <div class="hotels-header fade-up">
+      <div>
+        <div class="section-label">Where You Rest</div>
+        <h2 class="section-title">Stay in<br><em>Exceptional Places</em></h2>
+      </div>
+      <div class="hotels-subtitle">From ancient ryokan where time slows, to sleek city retreats above neon-lit streets.
+        Every stay is chosen with intention.</div>
+    </div>
+    <div class="hotels-grid fade-up">
+      <div class="hotel-card">
+        <div class="hotel-img">
+          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80" alt="Ryokan"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#3d1020,#8b6f9e)'">
+          <div class="hotel-badge">Ryokan</div>
+        </div>
+        <div class="hotel-body">
+          <div class="hotel-stars">★ ★ ★ ★ ★</div>
+          <div class="hotel-name">Gora Kadan</div>
+          <div class="hotel-loc">Hakone, Kanagawa</div>
+          <div class="hotel-amenities">
+            <span class="amenity">Private Onsen</span>
+            <span class="amenity">Kaiseki Dinner</span>
+            <span class="amenity">Mt Fuji Views</span>
+          </div>
+          <div class="hotel-price">
+            <div class="hotel-rate">¥68,000 <span>/ night</span></div>
+            <button class="hotel-book" onclick="openBookingModal('Gora Kadan')">Reserve</button>
+          </div>
+        </div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-img">
+          <img src="https://images.unsplash.com/photo-1586611292717-f828b167408c?w=800&q=80" alt="City Hotel"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#1a0a12,#6d2b45)'">
+          <div class="hotel-badge">Boutique</div>
+        </div>
+        <div class="hotel-body">
+          <div class="hotel-stars">★ ★ ★ ★ ★</div>
+          <div class="hotel-name">The Ace Hotel Kyoto</div>
+          <div class="hotel-loc">Karasuma, Kyoto</div>
+          <div class="hotel-amenities">
+            <span class="amenity">Rooftop Bar</span>
+            <span class="amenity">Tea Ceremony</span>
+            <span class="amenity">Garden View</span>
+          </div>
+          <div class="hotel-price">
+            <div class="hotel-rate">¥42,000 <span>/ night</span></div>
+            <button class="hotel-book" onclick="openBookingModal('The Ace Hotel Kyoto')">Reserve</button>
+          </div>
+        </div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-img">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Luxury Hotel"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#c9768e,#3d1020)'">
+          <div class="hotel-badge">Luxury</div>
+        </div>
+        <div class="hotel-body">
+          <div class="hotel-stars">★ ★ ★ ★ ★</div>
+          <div class="hotel-name">Aman Tokyo</div>
+          <div class="hotel-loc">Otemachi, Tokyo</div>
+          <div class="hotel-amenities">
+            <span class="amenity">Infinity Pool</span>
+            <span class="amenity">Spa</span>
+            <span class="amenity">City Panorama</span>
+          </div>
+          <div class="hotel-price">
+            <div class="hotel-rate">¥120,000 <span>/ night</span></div>
+            <button class="hotel-book" onclick="openBookingModal('Aman Tokyo')">Reserve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORT SECTION -->
+  <section class="transport" id="transport">
+    <div class="fade-up">
+      <div class="section-label">Getting Around</div>
+      <h2 class="section-title">Travel Japan<br><em>Like a Local</em></h2>
+    </div>
+    <div class="transport-grid fade-up">
+      <div class="transport-item">
+        <div class="transport-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="18" width="40" height="20" rx="3" />
+            <path d="M4 22 Q2 28 4 34" />
+            <rect x="10" y="22" width="7" height="6" rx="1.5" />
+            <rect x="21" y="22" width="7" height="6" rx="1.5" />
+            <rect x="32" y="22" width="7" height="6" rx="1.5" />
+            <circle cx="14" cy="41" r="3.5" />
+            <circle cx="36" cy="41" r="3.5" />
+            <line x1="4" y1="16" x2="44" y2="16" />
+            <line x1="4" y1="13" x2="44" y2="13" />
+          </svg>
+        </div>
+        <div class="transport-name">Shinkansen</div>
+        <div class="transport-jp">新幹線</div>
+        <div class="transport-desc">The bullet train — Japan's engineering marvel. Travel between cities at 320km/h with
+          clockwork precision. The JR Pass unlocks the entire network.</div>
+        <div class="transport-tip">JR Pass Recommended</div>
+      </div>
+      <div class="transport-item">
+        <div class="transport-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="14" width="32" height="22" rx="4" />
+            <rect x="12" y="18" width="7" height="5" rx="1.5" />
+            <rect x="22" y="18" width="7" height="5" rx="1.5" />
+            <rect x="32" y="18" width="5" height="5" rx="1.5" />
+            <rect x="14" y="36" width="6" height="6" rx="1" />
+            <rect x="28" y="36" width="6" height="6" rx="1" />
+            <line x1="8" y1="26" x2="40" y2="26" />
+            <line x1="24" y1="8" x2="24" y2="14" />
+            <line x1="18" y1="8" x2="30" y2="8" />
+          </svg>
+        </div>
+        <div class="transport-name">City Metro</div>
+        <div class="transport-jp">地下鉄</div>
+        <div class="transport-desc">Tokyo's metro system is a marvel of efficiency. 13 lines, 285 stations, running
+          every 3 minutes. An IC card makes it seamless.</div>
+        <div class="transport-tip">Suica Card Essential</div>
+      </div>
+      <div class="transport-item">
+        <div class="transport-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 32 Q8 18 24 16 Q40 18 40 32" />
+            <rect x="6" y="30" width="36" height="8" rx="2" />
+            <circle cx="14" cy="38" r="4" />
+            <circle cx="34" cy="38" r="4" />
+            <rect x="16" y="20" width="7" height="5" rx="1.5" />
+            <rect x="26" y="20" width="7" height="5" rx="1.5" />
+            <path d="M20 14 L24 10 L28 14" />
+          </svg>
+        </div>
+        <div class="transport-name">Private Car</div>
+        <div class="transport-jp">車</div>
+        <div class="transport-desc">For rural Japan — Hokkaido's wilderness, Noto Peninsula, mountain villages — a
+          private driver opens landscapes that rail cannot reach.</div>
+        <div class="transport-tip">Available on Request</div>
+      </div>
+      <div class="transport-item">
+        <div class="transport-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="20" r="8" />
+            <path d="M16 20 Q16 30 24 36 Q32 30 32 20" />
+            <path d="M10 14 Q16 8 24 8 Q32 8 38 14" />
+            <circle cx="24" cy="20" r="2" />
+            <line x1="24" y1="36" x2="24" y2="42" />
+            <line x1="18" y1="42" x2="30" y2="42" />
+            <rect x="8" y="28" width="8" height="5" rx="2" />
+            <rect x="32" y="28" width="8" height="5" rx="2" />
+          </svg>
+        </div>
+        <div class="transport-name">River Ferry</div>
+        <div class="transport-jp">フェリー</div>
+        <div class="transport-desc">Cross the Seto Inland Sea, cruise around Hiroshima's islands, or glide through
+          Matsushima's pine-dotted waters by scenic ferry.</div>
+        <div class="transport-tip">Seasonal Schedules</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOURS SECTION -->
+  <section class="tours" id="tours">
+    <div class="fade-up">
+      <div class="section-label">Curated Journeys</div>
+      <h2 class="section-title">Find Your<br><em>Perfect Tour</em></h2>
+    </div>
+    <div class="tours-grid fade-up">
+      <div class="tour-card">
+        <div class="tour-img">
+          <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&w=900&q=80"
+            alt="Cherry Blossom Tour"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#fce4ec,#f48fb1)'">
+          <div class="tour-duration">14 Days</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-type">Signature Journey</div>
+          <div class="tour-title">The Cherry Blossom Grand Tour</div>
+          <div class="tour-desc">Chase sakura from Tokyo to Kyoto in spring's finest window. Stay in handpicked ryokan,
+            dine under flowering trees.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Maruyama Park hanami picnic</div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Private temple dawn access</div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Sakura viewing cruise, Kyoto canal</div>
+          </div>
+          <div class="tour-footer">
+            <div>
+              <div class="tour-price">¥4,80,000</div>
+              <span class="tour-price-sub">per person</span>
+            </div>
+            <button class="tour-btn" onclick="openBookingModal('Cherry Blossom Grand Tour')">Book Tour</button>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img">
+          <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=900&q=80"
+            alt="Ancient Kyoto & Nara"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#8b6f9e,#3d1020)'">
+          <div class="tour-duration">10 Days</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-type">Cultural Immersion</div>
+          <div class="tour-title">Ancient Kyoto & Sacred Nara</div>
+          <div class="tour-desc">A deep immersion into Japan's cultural heartland. Artisans, priests, and masters open
+            their doors exclusively for you.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Private Nishiki Market tour with chef
+            </div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Zen meditation session, Daitoku-ji</div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Lacquerware masterclass</div>
+          </div>
+          <div class="tour-footer">
+            <div>
+              <div class="tour-price">¥3,20,000</div>
+              <span class="tour-price-sub">per person</span>
+            </div>
+            <button class="tour-btn" onclick="openBookingModal('Ancient Kyoto & Sacred Nara')">Book Tour</button>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img">
+          <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&w=900&q=80"
+            alt="Mt Fuji Hakone Onsen"
+            onerror="this.parentElement.style.background='linear-gradient(135deg,#c9768e,#6d2b45)'">
+          <div class="tour-duration">7 Days</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-type">Nature Escape</div>
+          <div class="tour-title">Fuji, Hakone & Onsen Serenity</div>
+          <div class="tour-desc">From the summit of Fuji to the healing waters of Hakone — a journey of contrasts
+            between scale and intimacy.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Fuji 5th Station sunrise hike</div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Private outdoor rotenburo onsen</div>
+            <div class="tour-highlight"><span class="tour-highlight-dot"></span>Lake Ashi dawn rowboat</div>
+          </div>
+          <div class="tour-footer">
+            <div>
+              <div class="tour-price">¥2,40,000</div>
+              <span class="tour-price-sub">per person</span>
+            </div>
+            <button class="tour-btn" onclick="openBookingModal('Fuji, Hakone & Onsen Serenity')">Book Tour</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-bg-text">JAPAN</div>
+    <div class="section-label">Your Journey Awaits</div>
+    <h1 class="cta-title">Begin Where<br><em>Blossoms</em> Fall</h1>
+    <p class="cta-sub">Crafted itineraries — speak with a Japan specialist today</p>
+    <div class="cta-btns">
+      <button class="cta-btn-white" onclick="openBookingModal('Plan My Journey CTA')">Plan My Journey</button>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--s2);margin-bottom:20px;display:flex">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+            style="margin-right:10px">
+            <rect x="2" y="6" width="24" height="2.5" rx="1" fill="#f8bbd9" />
+            <rect x="4" y="10" width="20" height="2" rx="1" fill="#f8bbd9" opacity="0.6" />
+            <rect x="6" y="12" width="3" height="14" rx="1" fill="#f8bbd9" />
+            <rect x="19" y="12" width="3" height="14" rx="1" fill="#f8bbd9" />
+          </svg>
+          SAKURA JAPAN
+        </div>
+        <p class="footer-tagline">Bespoke Japan journeys for those who seek depth, not distance. Est. 2018.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="#">Destinations</a></li>
+          <li><a href="#">Tour Packages</a></li>
+          <li><a href="#">Seasonal Guides</a></li>
+          <li><a href="#">The Journal</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Experiences</h4>
+        <ul class="footer-links">
+          <li><a href="#">Japanese Cuisine</a></li>
+          <li><a href="#">Ryokan Stays</a></li>
+          <li><a href="#">Temple Walks</a></li>
+          <li><a href="#">Onsen Retreats</a></li>
+          <li><a href="#">Private Tours</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="#"><span class="__cf_email__"
+                data-cfemail="e48c8188888ba497858f9196858e8594858aca878b89">[email&#160;protected]</span></a></li>
+          <li><a href="#">+81 3-1234-5678</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Book a Consult</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Sakura Japan. All rights reserved.</div>
+      <div class="footer-socials">
+        <a href="#"><svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" />
+            <circle cx="12" cy="12" r="5" />
+            <circle cx="17.5" cy="6.5" r="1.5" fill="rgba(244,143,177,0.4)" />
+          </svg></a>
+        <a href="#"><svg viewBox="0 0 24 24">
+            <path
+              d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+          </svg></a>
+        <a href="#"><svg viewBox="0 0 24 24">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+          </svg></a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- MODALS -->
+  <div id="bookingModal" class="booking-modal">
+    <div class="booking-modal-overlay" onclick="closeBookingModal()"></div>
+    <div class="booking-modal-content">
+      <button class="booking-close" onclick="closeBookingModal()">✕</button>
+      <div class="booking-header">
+        <div class="section-label">Reservation</div>
+        <h2 class="section-title" id="bookingTitle">Plan Your<br><em>Journey</em></h2>
+      </div>
+      <form class="booking-form" onsubmit="submitBooking(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="bName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="bEmail" required placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="bPhone" required placeholder="+1 234 567 8900">
+        </div>
+        <div class="form-group">
+          <label>Day Reserve (Start Date)</label>
+          <input type="date" id="bDate" required>
+        </div>
+        <button type="submit" class="booking-submit" id="bSubmit">Submit Reservation</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="seasonModal">
+    <div class="season-modal-backdrop" onclick="closeSeasonModal()"></div>
+    <div class="season-modal-img"><img id="smImg" src="" alt=""></div>
+    <div class="season-modal-content">
+      <button class="smc-close" onclick="closeSeasonModal()">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </button>
+      <span class="smc-tag" id="smTag"></span>
+      <span class="smc-jp" id="smJp"></span>
+      <h2 class="smc-name" id="smName"></h2>
+      <span class="smc-months" id="smMonths"></span>
+      <div class="smc-divider"></div>
+      <p class="smc-highlight" id="smHighlight"></p>
+      <div class="smc-extras">
+        <div class="smc-extra-item">
+          <div class="smc-extra-label">Key Event</div>
+          <div class="smc-extra-val" id="smEx1"></div>
+        </div>
+        <div class="smc-extra-item">
+          <div class="smc-extra-label">Must Try</div>
+          <div class="smc-extra-val" id="smEx2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // ── Modals logic
+    const bookingModal = document.getElementById('bookingModal');
+    function openBookingModal(title) {
+      if(title && title !== 'General Inquiry') {
+        document.getElementById('bookingTitle').innerHTML = `Reserve<br><em>${title}</em>`;
+      } else {
+        document.getElementById('bookingTitle').innerHTML = `Plan Your<br><em>Journey</em>`;
+      }
+      bookingModal.classList.add('open');
+    }
+    function closeBookingModal() { bookingModal.classList.remove('open'); }
+    function submitBooking(e) {
+      e.preventDefault();
+      const btn = document.getElementById('bSubmit');
+      btn.textContent = 'Submitted successfully!';
+      btn.style.background = '#27ae60';
+      setTimeout(() => {
+        closeBookingModal();
+        btn.textContent = 'Submit Reservation';
+        btn.style.background = '';
+        e.target.reset();
+      }, 2000);
+    }
+
+    const seasonDataVals = {
+      spring: {
+        img: 'images/sakura_trails_1775434906530.png',
+        tag: 'Spring Awakening', jp: '春', name: 'Sakura<br><em>Blossoms</em>', months: 'March — May',
+        highlight: 'Cherry blossoms frame temple gardens and river paths in a soft pink glow.',
+        ex1: 'Hanami Picnics', ex2: 'Sakura Mochi'
+      },
+      summer: {
+        img: 'images/lantern_garden_1775434925507.png',
+        tag: 'Summer Warmth', jp: '夏', name: 'Lantern<br><em>Festivals</em>', months: 'June — August',
+        highlight: 'Long evenings, lantern-lit streets, and mountain retreats full of color.',
+        ex1: 'Gion Matsuri', ex2: 'Kakigori Ice'
+      },
+      autumn: {
+        img: 'images/maple_temple_1775434840552.png',
+        tag: 'Autumn Glow', jp: '秋', name: 'Maple<br><em>Temples</em>', months: 'September — November',
+        highlight: 'Crimson and amber maples surround ancient shrines, a cinematic season.',
+        ex1: 'Momiji Viewing', ex2: 'Chestnut Sweets'
+      },
+      winter: {
+        img: 'images/winter_torii_1775434942007.png',
+        tag: 'Winter Silence', jp: '冬', name: 'Snowy<br><em>Shrines</em>', months: 'December — February',
+        highlight: 'Crisp air, steaming onsen, and quiet snowy temple gardens.',
+        ex1: 'Snow Festivals', ex2: 'Hot Pot (Nabe)'
+      }
+    };
+    const sModal = document.getElementById('seasonModal');
+    function openSeasonModal(key) {
+      const d = seasonDataVals[key];
+      document.getElementById('smImg').src = d.img;
+      document.getElementById('smTag').textContent = d.tag;
+      document.getElementById('smJp').textContent = d.jp;
+      document.getElementById('smName').innerHTML = d.name;
+      document.getElementById('smMonths').innerHTML = d.months;
+      document.getElementById('smHighlight').innerHTML = d.highlight;
+      document.getElementById('smEx1').innerHTML = d.ex1;
+      document.getElementById('smEx2').innerHTML = d.ex2;
+      sModal.classList.add('open');
+    }
+    function closeSeasonModal() { sModal.classList.remove('open'); }
+
+    // ── Cursor
+    const cursor = document.getElementById('cursor');
+    const aura = document.getElementById('cursorAura');
+    let mx = 0, my = 0, ax = 0, ay = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+    function animCursor() {
+      ax += (mx - ax) * 0.12; ay += (my - ay) * 0.12;
+      aura.style.left = ax + 'px'; aura.style.top = ay + 'px';
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+    document.querySelectorAll('button,a,.dest-card,.hotel-card,.tour-card,.food-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { aura.style.width = '60px'; aura.style.height = '60px'; aura.style.borderColor = 'rgba(212,84,122,0.5)' });
+      el.addEventListener('mouseleave', () => { aura.style.width = '36px'; aura.style.height = '36px'; aura.style.borderColor = 'rgba(212,84,122,0.4)' });
+    });
+
+    // ── Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) { navbar.classList.add('scrolled') }
+      else { navbar.classList.remove('scrolled') }
+    });
+
+    // ── Fade up on scroll
+    const faders = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible') } });
+    }, { threshold: 0.08 });
+    faders.forEach(f => io.observe(f));
+
+    // ── Track ties generation
+    const tiesDiv = document.getElementById('trackTies');
+
+    if (tiesDiv) {
+      for (let i = 0; i < 120; i++) {
+        const tie = document.createElement('div');
+        tie.className = 'tie';
+        tiesDiv.appendChild(tie);
+      }
+    }
+  </script>
+</body>
+
+</html>
